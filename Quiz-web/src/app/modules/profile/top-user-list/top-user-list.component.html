@@ -1,0 +1,28 @@
+<div class="container">
+
+  <div class="table-wrapper">
+
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th>{{ 'USERLIST.LOGIN' | translate }}</th>
+        <th>{{ 'USERLIST.SCORE' | translate }}</th>
+        <th>{{ 'USERLIST.DATE' | translate }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let user of users; let i = index;">
+        <tr routerLink="/users/{{user.id}}">
+          <td>{{i + 1}}</td>
+          <td><img src="data:image/jpeg;base64,{{user.image.src}}" height="50" class="avatar" alt="Avatar"></td>
+          <td><a routerLink="/users/{{user.id}}" > {{user.login}}</a></td>
+          <td>{{user.score}} <img src="../../assets/img/score.png" width="30" height="30" align="bottom"/></td>
+          <td>{{  user.registrationDate | date: 'longDate' : '' : translate.currentLang }}</td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

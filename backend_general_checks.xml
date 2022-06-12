@@ -1,0 +1,839 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
+        "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+    <property name="charset" value="UTF-8"/>
+
+    <property name="severity" value="error"/>
+
+    <property name="fileExtensions" value="java, properties, xml"/>
+
+    <module name="FileTabCharacter">
+        <property name="eachLine" value="true"/>
+    </module>
+
+    <module name="TreeWalker">
+        <!--
+        Description:    Checks that the outer type name and the file name match.
+        Example:        The class Foo must be in a file named Foo.java.
+        Error messages: The name of the outer type and the file do not match.
+        Doc ref:        http://checkstyle.sourceforge.net/config_misc.html#OuterTypeFilename
+        -->
+        <module name="OuterTypeFilename"/>
+
+        <!--
+        Description:    Checks for illegal token text.
+        Example:        To configure the check to forbid String literals containing "a href":
+                        <module name="IllegalTokenText">
+                            <property name="tokens" value="STRING_LITERAL"/>
+                            <property name="format" value="a href"/>
+                        </module>
+        Error messages: Token text matches the illegal pattern ''{0}''.
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#IllegalTokenText
+        -->
+        <module name="IllegalTokenText">
+            <property name="tokens" value="STRING_LITERAL, CHAR_LITERAL"/>
+            <property name="format"
+                      value="\\u00(08|09|0(a|A)|0(c|C)|0(d|D)|22|27|5(C|c))|\\(0(10|11|12|14|15|42|47)|134)"/>
+            <property name="message" value="Avoid using corresponding octal or Unicode escape."/>
+        </module>
+
+        <!--
+        Description:    Restrict using Unicode escapes (e.g. \u221e).
+        Example:        Check Doc examples.
+        Error messages: Unicode escape(s) usage should be avoided.
+        Doc ref:        http://checkstyle.sourceforge.net/config_misc.html#AvoidEscapedUnicodeCharacters
+        -->
+        <module name="AvoidEscapedUnicodeCharacters">
+            <property name="allowEscapesForControlCharacters" value="true"/>
+            <property name="allowByTailComment" value="true"/>
+            <property name="allowNonPrintableEscapes" value="true"/>
+        </module>
+
+        <!--
+        Description:    Checks that each top-level class, interface or enum resides in a source file of its own.
+        Example:        Check Doc examples.
+        Error messages: Top-level class {0} has to reside in its own source file.
+        Doc ref:        http://checkstyle.sourceforge.net/config_design.html#OneTopLevelClass
+        -->
+        <module name="OneTopLevelClass"/>
+
+        <!--
+        Description:    Checks that chosen statements are not line-wrapped. By default this Check restricts
+                        wrapping import and package statements, but it's possible to check any statement.
+        Example:        Bad:  import package com.puppycrawl.
+                                        tools.checkstyle.checks;
+                        Good: import package com.puppycrawl.tools.checkstyle.checks;
+        Error messages: Statement should not be line-wrapped.
+        Doc ref:        http://checkstyle.sourceforge.net/config_whitespace.html#NoLineWrap
+        -->
+        <module name="NoLineWrap"/>
+
+        <!--
+        Description:    Checks for empty blocks(while, try, finally, if, else etc).
+        Example:        Empty if(true){ } will be failed.
+        Error messages: Empty {if} block.
+        Doc ref:        http://checkstyle.sourceforge.net/config_blocks.html#EmptyBlock
+        -->
+        <module name="EmptyBlock">
+            <property name="option" value="TEXT"/>
+            <property name="tokens" value="LITERAL_TRY, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE, LITERAL_SWITCH"/>
+        </module>
+
+        <!--
+        Description:    Checks for braces around code blocks.
+        Example:        Bad:  if (true) doSomething();
+                        Good: if (true) {
+                            doSomething();
+                        }
+        Error messages: 'if' construct must use '{}'s.
+        Doc ref:        http://checkstyle.sourceforge.net/config_blocks.html#NeedBraces
+        -->
+        <module name="NeedBraces"/>
+
+        <!--
+        Description:    Checks for the placement of left curly braces ('{') for code blocks.
+        Example:        Bad:  if (true)
+                              {
+                                doSomething();
+                              }
+                        Good: if (true) {
+                                doSomething();
+                              }
+        Error messages: '{' at column 5 should be on the previous line.
+        Doc ref:        http://checkstyle.sourceforge.net/config_blocks.html#LeftCurly
+        -->
+        <module name="LeftCurly">
+            <property name="maxLineLength" value="100"/>
+        </module>
+
+        <!--
+        Description:    Checks the placement of right curly braces ('}') for if-else, try-catch-finally blocks,
+                        while-loops, for-loops, method definitions, class definitions, constructor definitions,
+                        instance and static initialization blocks.
+        Example:        http://checkstyle.sourceforge.net/property_types.html#rcurly
+        Error messages: More then one, check Doc for more details.
+        Doc ref:        http://checkstyle.sourceforge.net/config_blocks.html#RightCurly
+        -->
+        <module name="RightCurly"/>
+
+        <!--
+        Description:    Checks that a token is surrounded by whitespace.
+        Example:        public MyClass() {}
+        Error messages: More then one, check Doc for more details.
+        Doc ref:        http://checkstyle.sourceforge.net/config_whitespace.html#WhitespaceAround
+        -->
+        <module name="WhitespaceAround">
+            <property name="allowEmptyConstructors" value="true"/>
+            <property name="allowEmptyMethods" value="false"/>
+            <property name="allowEmptyTypes" value="true"/>
+            <property name="allowEmptyLoops" value="true"/>
+            <message key="ws.notFollowed"
+                     value="WhitespaceAround: ''{0}'' is not followed by whitespace. Empty blocks may only be represented as '{}' when not part of a multi-block statement (4.1.3)"/>
+            <message key="ws.notPreceded" value="WhitespaceAround: ''{0}'' is not preceded with whitespace."/>
+        </module>
+
+        <!--
+        Description:    Checks that there is only one statement per line.
+        Example:        int var1; int var2; // fail
+        Error messages: Only one statement per line allowed.
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#OneStatementPerLine
+        -->
+        <module name="OneStatementPerLine"/>
+
+        <!--
+        Description:    Checks that each variable declaration is in its own statement and on its own line.
+        Example:        int var1, var2; // fail
+        Error messages: Each variable declaration must be in its own statement.
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#MultipleVariableDeclarations
+        -->
+        <module name="MultipleVariableDeclarations"/>
+
+        <!--
+        Description:    Checks the style of array type definitions. Default - Java style.
+        Example:        Java style: public static void main(String[] args)
+                        C style:    public static void main(String args[])
+        Error messages: Array brackets at illegal position.
+        Doc ref:        http://checkstyle.sourceforge.net/config_misc.html#ArrayTypeStyle
+        -->
+        <module name="ArrayTypeStyle"/>
+
+        <!--
+        Description:    Checks the style of array type definitions. Default - Java style.
+        Example:        Java style: public static void main(String[] args)
+                        C style:    public static void main(String args[])
+        Error messages: Array brackets at illegal position.
+        Doc ref:        http://checkstyle.sourceforge.net/config_misc.html#ArrayTypeStyle
+        -->
+        <module name="MissingSwitchDefault"/>
+
+        <!--
+        Description:    Checks for fall-through in switch statements. Finds locations where a case contains
+                        Java code but lacks a break, return, throw or continue statement.
+        Example:        switch (i){
+                            case 0:
+                                i++; // fall through
+                            case 1:
+                                i++; // falls through
+                            case 2:
+                        }
+        Error messages: from previous/last branch of the switch statement.
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#FallThrough
+        -->
+        <module name="FallThrough"/>
+
+        <!--
+        Description:    Checks that long constants are defined with an upper ell. That is ' L' and not 'l'.
+        Example:        long num = 10l; // fail, should be 10L
+        Error messages: Should use uppercase ''L''.
+        Doc ref:        http://checkstyle.sourceforge.net/config_misc.html#UpperEll
+        -->
+        <module name="UpperEll"/>
+
+        <!--
+        Description:    Checks that the order of modifiers conforms to the suggestions in the Java Language
+                        specification, sections 8.1.1, 8.3.1 and 8.4.3. The correct order is:
+                        1.  public
+                        2.  protected
+                        3.  private
+                        4.  abstract
+                        5.  static
+                        6.  final
+                        7.  transient
+                        8.  volatile
+                        9.  synchronized
+                        10. native
+                        11. strictfp
+        Example:        final static long num; // fail, should be static final long num;
+        Error messages: Annotation modifier does not precede non-annotation modifiers.
+                        Modifier out of order with the JLS suggestions.
+        Doc ref:        http://checkstyle.sourceforge.net/config_modifier.html#ModifierOrder
+        -->
+        <module name="ModifierOrder"/>
+
+        <!--
+        Description:    Checks for empty line separators after header, package, all import declarations, fields,
+                        constructors, methods, nested classes, static initializers and instance initializers.
+        Example:        Check Doc.
+        Error messages: More then one.
+        Doc ref:        http://checkstyle.sourceforge.net/config_whitespace.html#EmptyLineSeparator
+        -->
+        <module name="EmptyLineSeparator">
+            <property name="allowNoEmptyLineBetweenFields" value="true"/>
+        </module>
+
+        <!--
+        Description:    Checks line wrapping with separators.
+        Example:        s
+                            .isEmpty();
+                        foo(i
+                            ,s);
+        Error messages: Should be on a new line.
+        Doc ref:        http://checkstyle.sourceforge.net/config_whitespace.html#SeparatorWrap
+        -->
+        <module name="SeparatorWrap">
+            <property name="tokens" value="DOT"/>
+            <property name="option" value="nl"/>
+        </module>
+        <module name="SeparatorWrap">
+            <property name="tokens" value="COMMA"/>
+            <property name="option" value="EOL"/>
+        </module>
+
+        <!--
+        Description:    Validates identifiers for packages by regex.
+        Example:        package Mypackege // fail
+        Error messages: '{0}' must match pattern '{1}'.
+        Doc ref:        http://checkstyle.sourceforge.net/config_naming.html#PackageName
+        -->
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+(\.[a-zA-Z_][a-zA-Z0-9_]*)*$"/>
+            <message key="name.invalidPattern" value="Package name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+        Description:    Validates identifiers for packages by regex.
+        Example:        package Mypackege // fail
+        Error messages: '{0}' must match pattern '{1}'.
+        Doc ref:        http://checkstyle.sourceforge.net/config_naming.html#PackageName
+        -->
+        <module name="TypeName">
+            <message key="name.invalidPattern" value="Type name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+        Description:    Validates identifiers for class type parameters by regex.
+        Example:        class dog { } // fail
+        Error messages: Class type name '{0}' must match pattern '{1}'.
+        Doc ref:        http://checkstyle.sourceforge.net/config_naming.html#ClassTypeParameterName
+        -->
+        <module name="ClassTypeParameterName">
+            <property name="format" value="^[A-Z]$"/>
+            <message key="name.invalidPattern" value="Class type name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+        Description:    Validates identifiers for method type parameters by regex.
+        Example:        private string name; // fail
+        Error messages: Method type name '{0}' must match pattern '{1}'.
+        Doc ref:        http://checkstyle.sourceforge.net/config_naming.html#MethodTypeParameterName
+        -->
+        <module name="MethodTypeParameterName">
+            <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>
+            <message key="name.invalidPattern" value="Method type name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+        Description:    Verifies there are no finalize() methods defined in a class.
+        Example:        Obviously.
+        Error messages: Avoid using finalizer method.
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#NoFinalizer
+        -->
+        <module name="NoFinalizer"/>
+
+        <!--
+        Description:    Checks that the whitespace around the Generic tokens (angle brackets) "<" and ">" are correct
+                        to the typical convention. The convention is not configurable.
+        Example:        Check Doc.
+        Error messages: More then one.
+        Doc ref:        http://checkstyle.sourceforge.net/config_whitespace.html#GenericWhitespace
+        -->
+        <module name="GenericWhitespace">
+            <message key="ws.followed" value="GenericWhitespace ''{0}'' is followed by whitespace."/>
+            <message key="ws.preceded" value="GenericWhitespace ''{0}'' is preceded with whitespace."/>
+            <message key="ws.illegalFollow" value="GenericWhitespace ''{0}'' should followed by whitespace."/>
+            <message key="ws.notPreceded" value="GenericWhitespace ''{0}'' is not preceded with whitespace."/>
+        </module>
+
+        <!--
+        Description:    The Check validate abbreviations(consecutive capital letters) length in identifier name,
+                        it also allows to enforce camel case naming.
+        Example:        final int MAx; // fail
+        Error messages: Abbreviation in name '{0}' must contain no more than '{1}' capital letters.
+        Doc ref:        http://checkstyle.sourceforge.net/config_naming.html#AbbreviationAsWordInName
+        -->
+        <module name="AbbreviationAsWordInName">
+            <property name="ignoreFinal" value="false"/>
+            <property name="allowedAbbreviationLength" value="30"/>
+        </module>
+
+        <!--
+        Description:    Checks that overload methods are grouped together.
+        Example:        Incorrect group:
+                        public void foo(int i) {}
+                        public void foo(String s) {}
+                        public void notFoo() {} // Have to be after foo(int i, String s)
+                        public void foo(int i, String s) {}
+        Error messages: Overload methods should not be split. Previous overloaded method located at line.
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#OverloadMethodsDeclarationOrder
+        -->
+        <module name="OverloadMethodsDeclarationOrder"/>
+
+        <!--
+        Description:    Checks the distance between declaration of variable and its first usage.
+        Example:        int count;
+                        a = a + b;
+                        b = a + a;
+                        count = b; // DECLARATION OF VARIABLE 'count'
+                                   // SHOULD BE HERE (distance = 3)
+        Error messages: More then one. Check Doc.
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#VariableDeclarationUsageDistance
+        -->
+        <module name="VariableDeclarationUsageDistance"/>
+
+
+        <!--                                     TO CONFIG                                            -->
+        <!--
+        Description:    Checks that the groups of import declarations appear in the order specified by the user.
+                        If there is an import but its group is not specified in the configuration such an import
+                        should be placed at the end of the import list.
+        Example:        Check Doc for example.
+        Error messages: More then one. Check Doc.
+        Doc ref:        http://checkstyle.sourceforge.net/config_imports.html#CustomImportOrder
+        -->
+        <!--<module name="CustomImportOrder">
+            <property name="specialImportsRegExp" value="com.google"/>
+            &lt;!&ndash;<property name="sortImportsInGroupAlphabetically" value="true"/>&ndash;&gt;
+            <property name="customImportOrderRules"
+                      value="STATIC###SPECIAL_IMPORTS###THIRD_PARTY_PACKAGE###STANDARD_JAVA_PACKAGE"/>
+        </module>-->
+
+
+        <!--
+        Description:    Checks the padding between the identifier of a method definition, constructor definition,
+                        method call, or constructor invocation; and the left parenthesis of the parameter list.
+        Example:        -
+        Error messages: More then one. Check Doc.
+        Doc ref:        http://checkstyle.sourceforge.net/config_whitespace.html#MethodParamPad
+        -->
+        <module name="MethodParamPad"/>
+
+        <!--
+        Description:    Checks the policy on how to wrap lines on operators.
+        Example:        -
+        Error messages: Should be on a new/previous line.
+        Doc ref:        http://checkstyle.sourceforge.net/config_whitespace.html#OperatorWrap
+        -->
+        <module name="OperatorWrap">
+            <property name="option" value="NL"/>
+            <property name="tokens"
+                      value="BAND, BOR, BSR, BXOR, DIV, EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR, LT, MINUS, MOD, NOT_EQUAL, PLUS, QUESTION, SL, SR, STAR "/>
+        </module>
+
+        <!--
+        Description:    Check location of annotation on language elements. By default, Check enforce to locate
+                        annotations immediately after documentation block and before target element, annotation
+                        should be located on separate line from target element.
+        Example:        Check Doc.
+        Error messages: Annotation should be alone on line.
+        Doc ref:        http://checkstyle.sourceforge.net/config_annotation.html#AnnotationLocation
+        -->
+        <module name="AnnotationLocation">
+            <property name="tokens" value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, METHOD_DEF, CTOR_DEF"/>
+        </module>
+        <module name="AnnotationLocation">
+            <property name="tokens" value="VARIABLE_DEF"/>
+            <property name="allowSamelineMultipleAnnotations" value="true"/>
+        </module>
+
+        <!--
+        Description:    Checks that the at-clause tag is followed by description.
+        Example:        -
+        Error messages: More then one. Check Doc.
+        Doc ref:        http://checkstyle.sourceforge.net/config_javadoc.html#NonEmptyAtclauseDescription
+        -->
+        <module name="NonEmptyAtclauseDescription"/>
+
+        <!--
+        Description:    Checks the indentation of the continuation lines in at-clauses.
+        Example:        How many spaces to use for new indentation level. Default - 4.
+        Error messages: More then one. Check Doc.
+        Doc ref:        http://checkstyle.sourceforge.net/config_javadoc.html#JavadocTagContinuationIndentation
+        -->
+        <!--<module name="JavadocTagContinuationIndentation"/>-->
+
+        <!--
+        Description:    Checks that Javadoc summary sentence does not contain phrases that are not recommended to use.
+        Example:        Use regex to check for incorrect Doc words.
+        Error messages: More then one. Check Doc.
+        Doc ref:        http://checkstyle.sourceforge.net/config_javadoc.html#SummaryJavadoc
+        -->
+        <!--<module name="SummaryJavadocCheck">
+            <property name="forbiddenSummaryFragments" value="^@return the *|^This method returns |^A [{]@code [a-zA-Z0-9]+[}]( is a )"/>
+        </module>-->
+
+        <!--
+        Description:    Checks that:
+                        - There is one blank line between each of two paragraphs and one blank line before the
+                          at-clauses block if it is present.
+                        - Each paragraph but the first has <p> immediately before the first word, with no space after.
+        Example:        Check Doc.
+        Error messages: More then one. Check Doc.
+        Doc ref:        http://checkstyle.sourceforge.net/config_javadoc.html#JavadocParagraph
+        -->
+        <!--<module name="JavadocParagraph"/>-->
+
+        <!--
+        Description:    Checks the order of at-clauses.
+        Example:        -
+        Error messages: More then one. Check Doc.
+        Doc ref:        http://checkstyle.sourceforge.net/config_javadoc.html#AtclauseOrder
+        -->
+        <module name="AtclauseOrder">
+            <property name="tagOrder" value="@param, @return, @throws, @deprecated"/>
+            <property name="target" value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, METHOD_DEF, CTOR_DEF, VARIABLE_DEF"/>
+        </module>
+
+        <!--
+        Description:    Checks the Javadoc of a method or constructor. Check Doc for more details.
+        Example:        Check Doc.
+        Error messages: More then one. Check Doc.
+        Doc ref:        http://checkstyle.sourceforge.net/config_javadoc.html#JavadocMethod
+        -->
+        <!--<module name="JavadocMethod">
+            &lt;!&ndash;<property name="scope" value="public"/>&ndash;&gt;
+            <property name="allowMissingParamTags" value="true"/>
+            <property name="allowMissingThrowsTags" value="true"/>
+            <property name="allowMissingReturnTag" value="true"/>
+            <property name="minLineCount" value="4"/>
+            <property name="allowedAnnotations" value="Override, Test"/>
+            <property name="allowThrowsTagsForSubclasses" value="true"/>
+            &lt;!&ndash; disable getters/setters check &ndash;&gt;
+            <property name="allowMissingPropertyJavadoc" value="true"/>
+            &lt;!&ndash; disable constructors check &ndash;&gt;
+            <property name="ignoreMethodNamesRegex" value="^[A-Z].*$"/>
+        </module>-->
+
+        <!--
+        Description:    Checks that a JavaDoc block can fit in a single line and doesn't contain at-clauses.
+                        Javadoc comment that contains at least one at-clause should be formatted in a few lines.
+        Example:        Check Doc.
+        Error messages: More then one. Check Doc.
+        Doc ref:        http://checkstyle.sourceforge.net/config_javadoc.html#SingleLineJavadoc
+        -->
+        <!--<module name="SingleLineJavadoc">
+            <property name="ignoreInlineTags" value="false"/>
+        </module>-->
+
+        <!--
+        Description:    Checks that a JavaDoc block can fit in a single line and doesn't contain at-clauses.
+                        Javadoc comment that contains at least one at-clause should be formatted in a few lines.
+        Doc ref:        http://checkstyle.sourceforge.net/config_blocks.html#EmptyCatchBlock
+        -->
+        <module name="EmptyCatchBlock">
+            <property name="exceptionVariableName" value="expected"/>
+        </module>
+
+        <!--
+        Description:    Controls the indentation between comments and surrounding code.
+                        Comments are indented at the same level as the surrounding code.
+        Doc ref:        http://checkstyle.sourceforge.net/config_blocks.html#EmptyCatchBlock
+        -->
+        <module name="CommentsIndentation"/>
+
+        <!--
+        Description:    Checks Javadoc comments for class and interface definitions.
+                        By default, does not check for author or version tags.
+        Doc ref:        http://checkstyle.sourceforge.net/config_javadoc.html#JavadocType
+        -->
+        <!--<module name="JavadocType"/>-->
+
+        <!--
+        Description:    Checks that variables have Javadoc comments. Ignores serialVersionUID fields.
+        Doc ref:        http://checkstyle.sourceforge.net/config_javadoc.html#JavadocVariable
+        -->
+        <!--<module name="JavadocVariable">
+            <property name="excludeScope" value="private"/>
+        </module>-->
+
+        <!--
+        Description:    Validates Javadoc comments to help ensure they are well formed. Check Doc for details.
+        Doc ref:        http://checkstyle.sourceforge.net/config_javadoc.html#JavadocStyle
+        -->
+        <!--<module name="JavadocStyle"/>-->
+
+        <!--
+        Description:    Validates identifiers for constants (static, final fields).
+        Doc ref:        http://checkstyle.sourceforge.net/config_naming.html#ConstantName
+        -->
+        <!--                              TO CONFIG                                 -->
+        <!--<module name="ConstantName">
+            <property name="format" value="^log(ger)?|[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"/>
+        </module>-->
+        <!--                                                                        -->
+        <!--
+        Description:    Validates identifiers for local, final variables, including catch parameters.
+        Doc ref:        http://checkstyle.sourceforge.net/config_naming.html#LocalFinalVariableName
+        -->
+        <module name="LocalFinalVariableName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+            <message key="name.invalidPattern" value="Parameter name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+        Description:    Checks that local, non-final variable names conform to a format specified by the format property.
+        Doc ref:        http://checkstyle.sourceforge.net/config_naming.html#LocalVariableName
+        -->
+        <module name="LocalVariableName">
+            <property name="tokens" value="VARIABLE_DEF"/>
+            <property name="format" value="^[a-z][a-zA-Z]*$"/>
+            <property name="allowOneCharVarInForLoop" value="true"/>
+            <message key="name.invalidPattern" value="Local variable name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+
+        <!--                                     TO CONFIG                                            -->
+        <!--
+        Description:    Validates identifiers for non-static fields.
+        Doc ref:        http://checkstyle.sourceforge.net/config_naming.html#MemberName
+        -->
+        <!--<module name="MemberName">
+            <property name="format" value="^[a-z][a-zA-Z]*$|^[A-Z]$"/>
+            <message key="name.invalidPattern" value="Member name ''{0}'' must match pattern ''{1}''."/>
+        </module>-->
+
+        <!--
+        Description:    Validates identifiers for methods.
+        Doc ref:        http://checkstyle.sourceforge.net/config_naming.html#MethodName
+        -->
+        <module name="MethodName">
+            <property name="format" value="^[a-z][a-zA-Z_\d]*$"/>
+            <message key="name.invalidPattern" value="Method name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+        Description:    Checks that method and catch parameter names conform to a format specified by the format property.
+        Doc ref:        http://checkstyle.sourceforge.net/config_naming.html#ParameterName
+        -->
+        <module name="ParameterName">
+            <property name="format" value="^[a-z][a-zA-Z]*$"/>
+            <message key="name.invalidPattern" value="Parameter name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+        Description:    Validates identifiers for static, non-final fields.
+        Doc ref:        http://checkstyle.sourceforge.net/config_naming.html#StaticVariableName
+        -->
+        <module name="StaticVariableName"/>
+
+        <!--
+        Description:    Checks for imports from a set of illegal packages. By default, the check rejects
+                        all sun.* packages since programs that contain direct calls to the sun.* packages
+        Doc ref:        http://checkstyle.sourceforge.net/config_imports.html#IllegalImport
+        -->
+        <!--<module name="IllegalImport"/>-->
+
+        <!--
+        Description:    Checks for redundant import statements. An import statement is considered redundant if:
+                        - It is a duplicate of another import. This is, when a class is imported more than once.
+                        - The class non-statically imported is from the java.lang package, e.g. importing java.lang.String.
+                        - The class non-statically imported is from the same package as the current package.
+        Doc ref:        http://checkstyle.sourceforge.net/config_imports.html#RedundantImport
+        -->
+        <module name="RedundantImport"/>
+
+        <!--
+        Description:    Checks for unused import statements. Checkstyle uses a simple but very reliable algorithm
+                        to report on unused import statements. Check Doc for details.
+        Doc ref:        http://checkstyle.sourceforge.net/config_imports.html#UnusedImports
+        -->
+        <module name="UnusedImports"/>
+
+        <!--
+        Description:    Checks the number of parameters of a method or constructor.
+        Doc ref:        http://checkstyle.sourceforge.net/config_sizes.html#ParameterNumber
+        -->
+        <module name="ParameterNumber">
+            <property name="max" value="15"/>
+        </module>
+
+        <!--
+        Description:    Checks the padding of an empty for iterator; that is whether white space is required at an empty
+                        for iterator, or such white space is forbidden. No check occurs if there is a line wrap at the
+                        iterator, as in.
+        Example:        for (Iterator foo = very.long.line.iterator();
+                          foo.hasNext();
+                         )
+        Doc ref:        http://checkstyle.sourceforge.net/config_whitespace.html#EmptyForIteratorPad
+        -->
+        <module name="EmptyForIteratorPad"/>
+
+
+        <!--                                     TO CONFIG                                            -->
+        <!--
+        Description:    Checks that there is no whitespace after/before a token.
+        Example:        arr[1]=2; //fail
+        Doc ref:        http://checkstyle.sourceforge.net/config_whitespace.html#NoWhitespaceAfter
+                        http://checkstyle.sourceforge.net/config_whitespace.html#NoWhitespaceBefore`
+        -->
+        <!--<module name="NoWhitespaceAfter"/>
+        <module name="NoWhitespaceBefore"/>-->
+
+        <!--
+        Description:    Checks the policy on the padding of parentheses.
+        Doc ref:        http://checkstyle.sourceforge.net/config_whitespace.html#ParenPad
+        -->
+        <module name="ParenPad"/>
+
+        <!--
+        Description:    Checks the policy on the padding of parentheses for typecasts. That is, whether a space is
+                        required after a left parenthesis and before a right parenthesis, or such spaces are forbidden.
+        Doc ref:        http://checkstyle.sourceforge.net/config_whitespace.html#TypecastParenPad
+        -->
+        <module name="TypecastParenPad"/>
+
+
+        <!--                                     TO CONFIG                                            -->
+        <!--
+        Description:    Checks that a token is followed by whitespace.
+        Doc ref:        http://checkstyle.sourceforge.net/config_whitespace.html#WhitespaceAfter
+        -->
+        <!--<module name="WhitespaceAfter"/>-->
+
+        <!--
+        Description:    Checks for redundant modifiers in:
+                        - Interface and annotation definitions.
+                        - Final modifier on methods of final and anonymous classes.
+                        - Inner interface declarations that are declared as static.
+                        - Class constructors.
+                        - Nested enum definitions that are declared as static.
+        Doc ref:        http://checkstyle.sourceforge.net/config_modifier.html#RedundantModifier
+        -->
+        <module name="RedundantModifier"/>
+
+        <!--
+        Description:    Finds nested blocks, i.e. blocks that are used freely in the code. Check Doc for details.
+        Doc ref:        http://checkstyle.sourceforge.net/config_blocks.html#AvoidNestedBlocks
+        -->
+        <module name="AvoidNestedBlocks"/>
+
+        <!--
+        Description:    Detects empty statements (standalone ";" semicolon).
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#EmptyStatement
+        -->
+        <module name="EmptyStatement"/>
+
+        <!--
+        Description:    Checks that classes that override equals() also override hashCode().
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#EqualsHashCode
+        -->
+        <module name="EqualsHashCode"/>
+
+        <!--
+        Description:    Checks that a local variable or a parameter does not shadow a field that is defined in the same class.
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#HiddenField
+        -->
+        <!--<module name="HiddenField"/>-->
+
+        <!--
+        Description:    Checks for illegal instantiations where a factory method is preferred.
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#IllegalInstantiation
+        -->
+        <module name="IllegalInstantiation"/>
+
+        <!--
+        Description:    Checks for assignments in subexpressions, such as in String s = Integer.toString(i = 2);.
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#InnerAssignment
+        -->
+        <module name="InnerAssignment"/>
+
+        <!--
+        Description:    Checks that there are no "magic numbers" where a magic number is a numeric literal that is not
+                        defined as a constant. By default, -1, 0, 1, and 2 are not considered to be magic numbers.
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#MagicNumber
+        -->
+        <!--<module name="MagicNumber"/>-->
+
+        <!--
+        Description:    The Check finds classes that are designed for extension (subclass creation). Check Doc for details.
+        Doc ref:        http://checkstyle.sourceforge.net/config_design.html#DesignForExtension
+        -->
+        <!--<module name="DesignForExtension"/>-->
+
+        <!--
+        Description:    Checks that a class which has only private constructors is declared as final.
+                        Doesn't check for classes nested in interfaces or annotations, as they are always final there.
+        Doc ref:        http://checkstyle.sourceforge.net/config_design.html#FinalClass
+        -->
+        <!--- <module name="FinalClass"/> -->
+
+        <!--
+        Description:    Makes sure that utility classes (classes that contain only static methods or fields in their API)
+                        do not have a public constructor.
+        Doc ref:        http://checkstyle.sourceforge.net/config_design.html#HideUtilityClassConstructor
+        -->
+        <!--<module name="HideUtilityClassConstructor"/>-->
+
+
+        <!--                                     TO CONFIG                                            -->
+        <!--
+        Description:    Implements Joshua Bloch, Effective Java, Item 17 - Use Interfaces only to define types.
+        Doc ref:        http://checkstyle.sourceforge.net/config_design.html#InterfaceIsType
+        -->
+        <!--<module name="InterfaceIsType"/>-->
+        <!--                                                                                          -->
+
+
+        <!--
+        Description:    Checks visibility of class members. Only static final, immutable or annotated by specified
+                        annotation members may be public; other class members must be private unless the property
+                        protectedAllowed or packageAllowed is set.
+        Doc ref:        http://checkstyle.sourceforge.net/config_design.html#VisibilityModifier
+        -->
+        <module name="VisibilityModifier">
+            <property name="protectedAllowed" value="true"/>
+        </module>
+
+        <!--
+        Description:    Check that parameters for methods, constructors, and catch blocks are final. Interface, abstract,
+                        and native methods are not checked: the final keyword does not make sense for interface, abstract,
+                        and native method parameters as there is no code that could modify the parameter.
+        Doc ref:        http://checkstyle.sourceforge.net/config_misc.html#FinalParameters
+        -->
+        <!--<module name="FinalParameters"/>-->
+
+        <!--
+        Description:    A check for Tod0 comments. Actually it is a generic regular expression matcher on Java comments.
+                        To check for other patterns in Java comments, set the format property.
+        Doc ref:        http://checkstyle.sourceforge.net/config_misc.html#TodoComment
+        -->
+        <module name="TodoComment"/>
+
+        <!-- Included from Argona project -->
+
+        <!--
+        Description:    Checks the padding of an empty for initializer.
+        Example:        for (int i = 10
+                           ; i < j; i++){ ... }
+        Doc ref:        http://checkstyle.sourceforge.net/config_whitespace.html#EmptyForInitializerPad
+        -->
+        <module name="EmptyForInitializerPad">
+            <property name="option" value="space"/>
+        </module>
+
+        <!--
+        Description:    Restricts nested try blocks to a specified depth (default = 1).
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#NestedIfDepth
+        -->
+        <module name="NestedTryDepth">
+            <property name="max" value="1"/>
+        </module>
+
+        <!--
+        Description:    Check that the default is after all the cases in a switch statement.
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#DefaultComesLast
+        -->
+        <module name="DefaultComesLast"/>
+
+        <!--
+        Description:    Check that the default is after all the cases in a switch statement.
+        Example:        if (count == true) {...}  // wrong
+                        if (count) {...}          // right
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#SimplifyBooleanExpression
+        -->
+        <module name="SimplifyBooleanExpression"/>
+
+        <!--
+        Description:    Checks for over-complicated boolean return statements.
+        Example:        // wrong
+                        if (valid()) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                        // right
+                        return !valid();
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#SimplifyBooleanReturn
+        -->
+        <module name="SimplifyBooleanReturn"/>
+
+        <!--
+        Description:    Checks that string literals are not used with == or !=.
+        Example:        if (x == "something")       // wrong
+                        if ("something".equals(x))  // right
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#StringLiteralEquality
+        -->
+        <module name="StringLiteralEquality"/>
+
+        <!--
+        Description:    Ensures that a class has a package declaration, and (optionally) whether the package name
+                        matches the directory name for the source file.
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#PackageDeclaration
+        -->
+        <module name="PackageDeclaration"/>
+
+        <!--
+        Description:    Restricts nested if-else blocks to a specified depth (default = 1).
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#NestedIfDepth
+        -->
+        <module name="NestedIfDepth"/>
+
+        <!--
+        Description:    Restricts nested for blocks to a specified depth (default = 1).
+        Doc ref:        http://checkstyle.sourceforge.net/config_coding.html#NestedForDepth
+        -->
+        <module name="NestedForDepth"/>
+    </module>
+</module>

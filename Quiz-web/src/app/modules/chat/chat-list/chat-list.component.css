@@ -1,0 +1,43 @@
+
+.chat_ib {
+  float: left;
+  padding: 0 0 0 15px;
+  width: 88%;
+}
+
+.chat_ib h5 {
+  font-size: 20px;
+  color: #464646;
+  margin: 0 0 8px 0;
+}
+
+.chat_ib h5 span {
+  font-size: 15px;
+  float: right;
+}
+
+.chat_ib p {
+  font-size: 14px;
+  color: #989898;
+  margin: auto
+}
+
+.chat_list {
+  border-bottom: 1px solid #c4c4c4;
+  margin: 0;
+  padding: 18px 16px 10px;
+  overflow: hidden;
+  clear: both;
+}
+
+.chat_list:hover {
+  background: #f8f9fa;
+}
+
+.avatar {
+  float: left;
+  vertical-align: middle;
+  margin-right: 10px;
+  width: 11%;
+  max-width: 90px;
+}

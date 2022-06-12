@@ -1,0 +1,29 @@
+.start-pos {
+  margin-top: 80px;
+  margin-left: 200px;
+}
+
+#slider{
+  margin-left: -9.5%;
+}
+
+#carouselExampleIndicators{
+  /*margin-left: -5%;
+  margin-right: -5%;*/
+}
+
+#b{
+}
+
+.act {
+  background: #FFA700;
+  color: black;
+  border: none;
+  margin-bottom: 20px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  width: 130px;
+}

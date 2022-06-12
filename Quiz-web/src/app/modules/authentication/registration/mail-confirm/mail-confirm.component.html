@@ -1,0 +1,16 @@
+<div class="container">
+  <div *ngIf="isConfirmed; else tokenUnavailable" style="margin-top: 25vh;">
+    <div class="col-sm text-center">
+      <h2>{{'AUTHENTICATION.mailConfirm.registrationSuccessfully'|translate}}</h2>
+      <h4>{{'AUTHENTICATION.mailConfirm.plsSignIn'|translate}}</h4>
+      <a class="btn btn-warning mt-2" style="width: 20vw" [routerLink]="['/login']" routerLinkActive="active">
+        {{'AUTHENTICATION.mailConfirm.signIn'|translate}}</a><br>
+
+    </div>
+  </div>
+  <ng-template #tokenUnavailable>
+    <div class="col-sm text-center" style="margin-top: 30vh;">
+      <h2>{{'AUTHENTICATION.mailConfirm.noToken'|translate}}</h2>
+    </div>
+  </ng-template>
+</div>

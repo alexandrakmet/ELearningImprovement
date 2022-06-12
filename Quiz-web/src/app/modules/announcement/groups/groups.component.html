@@ -1,0 +1,34 @@
+<button *ngIf="!creation" class="form-control btn btn-warning mb-3" (click)="creation = !creation;">{{ 'GROUP.CREATE_GROUP' | translate }}</button>
+<div *ngIf="creation" class="input-group mb-3">
+  <input type="text" class="form-control" [(ngModel)]="group.name" placeholder="{{ 'GROUP.CREATE_GROUP_NAME' | translate }}">
+  <div class="input-group-append">
+    <button class="btn btn-warning" type="button" (click)="createChat()">{{ 'GROUP.CREATE_GROUP' | translate }}</button>
+  </div>
+</div>
+
+<button *ngIf="!joining" class="form-control btn btn-warning mb-3" (click)="joining = !joining;">{{ 'GROUP.JOIN_GROUP' | translate }}</button>
+<div *ngIf="joining" class="input-group mb-3">
+  <input type="text" class="form-control" [(ngModel)]="joinCode" placeholder="{{ 'GROUP.JOIN_GROUP_NAME' | translate }}">
+  <div class="input-group-append">
+    <button class="btn btn-warning" type="button" (click)="join()">{{ 'GROUP.JOIN_GROUP' | translate }}</button>
+  </div>
+</div>
+<!--<input type="text" placeholder="Search group" class="form-control border border-warning  mb-3">-->
+
+<ng-container *ngFor="let group of groups">
+  <div class="group_list" >
+    <img src="assets/img/class.jpg" class="avatar" alt="Avatar">
+    <div class="group_ib">
+      <h5 routerLink="../group/{{group.id}}">{{group.name}}
+        <span class="group_date">{{  group.creationDate | date: 'medium' : '' : translate.currentLang }}</span>
+      </h5>
+      <p *ngIf="group.invitationCode">{{ 'GROUP.CODE' | translate }}  - {{group.invitationCode}}</p>
+    </div>
+  </div>
+</ng-container>
+
+<div class="w-75 d-block mx-auto">
+  <app-spin-cat class="p-3" [show]="isWaiting" [text]="'GROUP.WAIT_LOAD'"></app-spin-cat>
+</div>
+
+

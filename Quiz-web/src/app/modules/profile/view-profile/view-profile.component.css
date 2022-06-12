@@ -1,0 +1,25 @@
+.leftpic {
+  margin: 20px 20px 20px 20px;
+}
+.word-break{
+  word-break: break-all;
+}
+
+.image-upload-container {
+  cursor: pointer;
+}
+
+
+.img-preview-container {
+  position: relative;
+  background: #ffffff no-repeat center center;
+  background-size: contain;
+  height: 250px !important;
+  width: 230px !important;
+
+}
+
+.btn-bwm {
+  margin: 15px 30px;
+}
+

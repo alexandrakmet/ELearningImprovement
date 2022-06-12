@@ -1,0 +1,39 @@
+<div class="container">
+
+  <div class="row">
+
+    <!-- Post Content Column -->
+    <div class="col-lg-10 text-center">
+      <h1 *ngIf="announcement.id" class="mt-4">{{ 'ANNOUNCEMENT.UPDATE' | translate }}</h1>
+      <h1 *ngIf="!announcement.id" class="mt-4">{{ 'ANNOUNCEMENT.CREATE' | translate }}</h1>
+
+      <input [(ngModel)]="announcement.title" type="text" class="form-control m-2" placeholder="{{ 'ANNOUNCEMENT.TITLE' | translate }}">
+      <input [(ngModel)]="announcement.subtitle" type="text" class="form-control m-2" placeholder="{{ 'ANNOUNCEMENT.SUBTITLE' | translate }}">
+
+      <textarea [(ngModel)]="announcement.fullText" class="form-control m-2" rows="10" placeholder="{{ 'ANNOUNCEMENT.TEXT' | translate }}"></textarea>
+
+      <label *ngIf="(announcement.imageId==-1)" class="image-upload-container btn btn-bwm btn-warning">
+        <span>{{ 'ANNOUNCEMENT.UPLOAD' | translate }}</span>
+        <input class="d-none" #imageInput
+               type="file"
+               accept="image/*"
+               (change)="processFile(imageInput, announcement)">
+      </label>
+
+      <label *ngIf="announcement.imageId!=-1" class="image-upload-container btn btn-bwm">
+        <input class="d-none" #imageInput
+               type="file"
+               accept="image/*"
+               (change)="processFile(imageInput, announcement)">
+        <img *ngIf="updated" class="img-fluid rounded" src="{{announcement.image.src}}">
+        <img *ngIf="!updated" class="img-fluid rounded" src="data:image/jpeg;base64,{{announcement.image.src}}">
+      </label>
+      <div *ngIf="isInvalid" class="w-100 alert border-danger my-4 text-center">
+        {{ 'ANNOUNCEMENT.ALERT' | translate }}
+      </div>
+      <button (click)="send()" class="btn btn-warning form-control">{{ 'ANNOUNCEMENT.SUBMIT' | translate }}</button>
+
+    </div>
+
+  </div>
+</div>

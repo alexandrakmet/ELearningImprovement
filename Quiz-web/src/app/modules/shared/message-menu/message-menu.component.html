@@ -1,0 +1,40 @@
+<div class="notification-wrapper">
+  <div class="notification-btn" (click)="openNotification(!showMessage); changeShowMenu(showMessage)">
+    <div matBadge="{{unviewedNotificationCount}}" matBadgeColor="warn" *ngIf="unviewedNotificationCount > 0">
+      <span class="fas fa-envelope" style="font-size: 20px; padding: 0"></span>
+    </div>
+    <div *ngIf="unviewedNotificationCount == 0">
+      <span class="fas fa-envelope" style="font-size: 20px; padding: 0"></span>
+    </div>
+
+  </div>
+
+  <div *ngIf="showMessage" class="notification-content">
+    <div class="notification-header">
+      <div>
+        <span class="label">{{'NOTIFICATIONS.MESSAGE_TITLE' | translate}}</span>
+        <span (click)="deleteAllNotification()">
+         <div class="fas fa-trash"> </div>
+       </span>
+      </div>
+    </div>
+
+    <div class="notification-container shadow" style="border-radius: 4px;">
+      <ng-container *ngFor="let notification of messages">
+        <div class="notification-item" (mouseover)="setViewed(notification)">
+          <button type="button" (click)="deleteNotification(notification.linkAction, notification.id)" class="close"
+                  data-dismiss="modal" aria-hidden="true">×
+          </button>
+          <a routerLink="{{notification.authorLink}}" class="post-title mt-4 authorLinkFont">
+            {{notification.author}}
+            <br>
+          </a>
+          <span class="lead">
+           {{'NOTIFICATIONS.' + notification.action | translate}}<br>
+        </span>
+          <a routerLink="{{notification.actionLink}}" class="linkFont">{{'NOTIFICATIONS.REVIEW' | translate}}<br></a>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

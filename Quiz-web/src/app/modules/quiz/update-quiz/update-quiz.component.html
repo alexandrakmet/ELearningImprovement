@@ -1,0 +1,237 @@
+<!--
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+-->
+<div class="container">
+  <p class="text-center h3">{{'quiz.createQuiz'|translate}}</p>
+
+  <div class="row mx-0">
+
+    <div class="col-md-3">
+      <label class="image-upload-container btn btn-bwm">
+        <input class="d-none" #imageInput
+               type="file"
+               accept="image/*"
+               (change)="processFile(imageInput, quiz)">
+        <div class="img-preview-container img-preview"
+             *ngIf="quiz.imageId==-1"
+             [ngStyle]="{'background-image': 'url(../../../../assets/img/logo.png'}">
+        </div>
+        <div class="img-preview-container img-preview"
+             *ngIf="quiz.imageId!=-1"
+             [ngStyle]="{ 'background-image': 'url(data:image/jpeg;base64,' + quiz.image.src  + ')'}">
+        </div>
+      </label>
+    </div>
+
+
+    <div class="col-md-9">
+
+      <div class="row mx-0">
+
+        <label class="col-sm border-0">
+          {{'quiz.viewQuiz.quizName'|translate}}
+          <input [(ngModel)]="quiz.name" class="form-control" placeholder="{{'quiz.editQuiz.enterQuizName'|translate}}"
+                 required
+                 minlength="4">
+        </label>
+        <label *ngIf="false" for="categories" class="col-sm m-3 border-0"> {{'quiz.viewQuiz.category'|translate}}
+          <select #mySelect id="categories" class="form-control" (change)="setCategory(mySelect.value)">
+            <!--or custom select-->
+            <ng-container *ngFor="let category of categories">
+              <option [attr.selected]="category.name==quiz.category.name ? true : null"
+                      [value]="category.name">{{category.name}}</option>
+            </ng-container>
+          </select>
+        </label>
+      </div>
+
+      <div class="mat-app-background">
+        <mat-form-field class="example-chip-list w-100">
+          <mat-chip-list #chipList aria-label="Fruit selection w-100">
+            <mat-chip
+              *ngFor="let tag of quiz.tags"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="remove(tag)">
+              {{tag.name}}
+              <button type="button" class="close mb-1" aria-label="Close" matChipRemove>
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </mat-chip>
+            <input
+              placeholder="{{'quiz.editQuiz.newTag'|translate}}"
+              #tagInput
+              [formControl]="tagCtrl"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+              {{tag}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <div class="w-100 h-auto">
+        <label class="w-100 h-auto">{{'quiz.viewQuiz.description'|translate}}:
+          <input class="form-control h-auto w-100" [(ngModel)]="quiz.description">
+        </label>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div>
+    <ng-container *ngFor="let question of quiz.questions">
+
+      <div class="form-control h-auto mx-0 my-1 p-4 border-dark border">
+
+        <button type="button" class="close" aria-label="Close" (click)="removeQuestion(question)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+        <div class="row">
+
+
+          <div class="col-md-3">
+            <label *ngIf="question.imageId==-1" class="image-upload-container btn btn-bwm btn-warning">
+              <span>{{'quiz.editQuiz.selectImage'|translate}}</span>
+              <input class="d-none" #imageInput
+                     type="file"
+                     accept="image/*"
+                     (change)="processFile(imageInput, question)">
+            </label>
+
+            <label *ngIf="question.imageId!=-1" class="image-upload-container btn btn-bwm">
+              <input class="d-none" #imageInput
+                     type="file"
+                     accept="image/*"
+                     (change)="processFile(imageInput, question)">
+              <div class="img-preview-container img-preview"
+                   [ngStyle]="{ 'background-image': 'url( data:image/jpeg;base64,' + question.image.src  + ')'}">
+              </div>
+            </label>
+          </div>
+
+          <div class="col-md-9">
+
+            <div>
+              <select #mySelect class="custom-select m-1"
+                      (change)="onChangeTypeQuestion(question, mySelect.value)">
+                <option *ngFor="let questionType of questionTypes"
+                        [attr.selected]="question.type==questionType ? true : null"
+                        [value]="questionType">{{'quiz.questionTypes.'+questionType|translate}}
+                </option>
+              </select>
+            </div>
+            <div>
+              <input [(ngModel)]="question.content" class="form-control col-sm m-1"
+                     placeholder="{{'quiz.editQuiz.question'|translate}}"/>
+            </div>
+
+            <div [ngSwitch]="question.type">
+              <div *ngSwitchCase="'SELECT_OPTION'">
+                <div class="row mx-0" *ngFor="let questionOption of question.options">
+                  <input type="checkbox" class="questionOption" [(ngModel)]="questionOption.isCorrect">
+                  <input [(ngModel)]="questionOption.content" placeholder="{{'quiz.editQuiz.inputAnswer'|translate}}"
+                         class="questionOption w-50 form-control col m-1 border"/>
+                  <div>
+                    <label *ngIf="questionOption.imageId==-1" class="image-upload-container btn btn-bwm btn-warning">
+                      <span>{{'quiz.editQuiz.selectImage'|translate}}</span>
+                      <input class="d-none" #imageInput
+                             type="file"
+                             accept="image/*"
+                             (change)="processFile(imageInput, questionOption)">
+                    </label>
+
+                    <label *ngIf="questionOption.imageId!=-1" class="image-upload-container btn btn-bwm">
+                      <input class="d-none" #imageInput
+                             type="file"
+                             accept="image/*"
+                             (change)="processFile(imageInput, questionOption)">
+                      <div class="img-preview-container img-preview"
+                           [ngStyle]="{ 'background-image': 'url(data:image/jpeg;base64,' + questionOption.image.src  + ')'}">
+                      </div>
+                    </label>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div *ngSwitchCase="'SELECT_SEQUENCE'">
+                <div class="row mx-0" *ngFor="let questionOption of  question.options">
+                  <label for="{{questionOption.sequenceOrder}}"
+                         class="questionOption">{{questionOption.sequenceOrder}}</label>
+                  <input id="{{questionOption.sequenceOrder}}" [(ngModel)]="questionOption.content"
+                         placeholder="{{'quiz.editQuiz.inputAnswer'|translate}}" class="form-control w-50 m-1 questionOption">
+                  <div>
+                    <label *ngIf="questionOption.imageId==-1" class="image-upload-container btn btn-bwm btn-warning">
+                      <span>{{'quiz.editQuiz.selectImage'|translate}}</span>
+                      <input class="d-none" #imageInput
+                             type="file"
+                             accept="image/*"
+                             (change)="processFile(imageInput, questionOption)">
+                    </label>
+
+                    <label *ngIf="questionOption.imageId!=-1" class="image-upload-container btn btn-bwm">
+                      <input class="d-none" #imageInput
+                             type="file"
+                             accept="image/*"
+                             (change)="processFile(imageInput, questionOption)">
+                      <div class="img-preview-container img-preview"
+                           [ngStyle]="{ 'background-image': 'url(data:image/jpeg;base64,' + questionOption.image.src  + ')'}">
+                      </div>
+                    </label>
+                  </div>
+
+                </div>
+              </div>
+
+              <div *ngSwitchCase="'TRUE_FALSE'" class="row mx-0 mt-2">
+                <div class="col-sm-4 mx-3 btn btn-{{question.options[0].isCorrect?'primary': 'secondary'}}"
+                     (click)="setCorrectAnswer(question, true)">
+                  {{'quiz.questionTypes.true'|translate}}
+                </div>
+                <div class="col-sm-4 mx-3 btn btn-{{question.options[0].isCorrect?'secondary': 'primary'}}"
+                     (click)="setCorrectAnswer(question, false)">
+                  {{'quiz.questionTypes.false'|translate}}
+                </div>
+              </div>
+
+              <div *ngSwitchCase="'ENTER_ANSWER'">
+                <input [(ngModel)]="question.options[0].content" placeholder="{{'quiz.editQuiz.correctAnswer'|translate}}"
+                       class="form-control w-75 m-1 mt-2">
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+
+      </div>
+    </ng-container>
+
+  </div>
+
+
+  <div class="text-center row">
+    <button (click)="addQuestion()" class="btn btn-warning px-5 m-3">
+      {{'quiz.editQuiz.addQuestion'|translate}}
+    </button>
+    <button (click)="send()" class="btn btn-success px-5 m-3">
+      {{'quiz.editQuiz.send'|translate}}
+    </button>
+  </div>
+  <div *ngIf="isInvalid" class="w-100 alert border-danger">
+    <ng-container *ngFor="let message of messages">
+      {{message|translate}}
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+
+.logo-image{
+  width: 60px;
+  height: 55px;
+  overflow: hidden;
+}
+
+.header-link {
+  color: black;
+  font-size: 15px;
+}
+
+.navbar-btn {
+  box-shadow: none;
+  outline: none !important;
+  border: none;
+}
+
+
+.navbar-brand {
+  box-shadow: none;
+  outline: none !important;
+  border: none;
+}
+
+.custom-nav{
+  margin-top: -15px;
+  margin-bottom: 15px;
+}
+
+.custom-collapse-nav{
+  margin-left: -15px;
+  margin-right: -15px;
+  z-index: 100000;
+}
+
+.custom-link:hover{
+  cursor: pointer;
+}
+
+#header{
+  margin-top: -20px;
+  margin-right: -20px;
+  margin-left: -20px;
+  height: 80px;
+}
+
+
+#sidebarCollapse {
+  width: 60px !important;
+  height: 60px !important;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+#sidebarCollapse span {
+  width: 30px;
+  height: 2px;
+  margin: 0 auto;
+  display: block;
+  background: #555;
+  transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+  transition-delay: 0.2s;
+}
+
+#sidebarCollapse span:first-of-type {
+  transform: rotate(45deg) translate(2px, 2px);
+}
+#sidebarCollapse span:nth-of-type(2) {
+  opacity: 0;
+}
+#sidebarCollapse span:last-of-type {
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+
+
+#sidebarCollapse.active span {
+  transform: none;
+  opacity: 1;
+  margin: 5px auto;
+}
+
+
+.changeLangEvent{
+  color: white;
+}
+
+.changeLangEvent:hover{
+  cursor: pointer;
+}
+
+.active{
+  color: black;
+}
+
+.active:hover{
+  cursor: auto;
+}

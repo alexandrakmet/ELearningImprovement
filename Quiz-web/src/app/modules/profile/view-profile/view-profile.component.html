@@ -1,0 +1,90 @@
+<div class="row">
+  <div class="container">
+    <div class="row justify-content-md-left">
+      <div class="col-md-auto">
+        <div  class="img-preview-container"
+             *ngIf="!isOwn"
+             [ngStyle]="{ 'background-image': 'url(data:image/jpeg;base64,' + userData.image.src  + ')'}">
+        </div>
+
+        <label *ngIf="isOwn" class="image-upload-container btn btn-bwm">
+          <input class="d-none" #imageInput
+                 type="file"
+                 accept="image/*"
+                 (change)="processFile(imageInput, userData)">
+          <img *ngIf="updated" src="{{userData.image.src}}" width="230" height="250">
+          <div class="img-preview-container"
+               *ngIf="!updated"
+               [ngStyle]="{ 'background-image': 'url(data:image/jpeg;base64,' + userData.image.src  + ')'}">
+          </div>
+        </label>
+        <button *ngIf="isOwn && loadedPhoto" (click)="update()" class="btn btn-warning form-control mb-3">{{'viewProfile.savePhoto' | translate}}</button>
+        <button *ngIf="isOwn" class="btn btn-warning btn-block" routerLink="../edit">
+          {{'viewProfile.edit' | translate}}
+        </button>
+        <button *ngIf="!isOwn && !isFriend && role == roleEnum.USER" class="btn btn-warning btn-block" (click)="friendship()">
+          {{'viewProfile.addToFriends' | translate}}
+        </button>
+        <button *ngIf="!isOwn && isFriend && role == roleEnum.USER" class="btn btn-warning btn-block" (click)="friendship()">
+          {{'viewProfile.deleteFromFriends' | translate}}
+        </button>
+        <button *ngIf="role == roleEnum.ADMIN && isOwn" class="btn btn-warning btn-block"
+                (click)="recalculateAchievement()">
+          {{'viewProfile.achievements' | translate}}
+        </button>
+        <button *ngIf="userData.status==statusEnum.ACTIVATED && !isOwn &&
+          (role == roleEnum.ADMIN || role == roleEnum.SUPER_ADMIN)" class="btn btn-warning btn-block"
+                (click)="changeStatus()">
+          {{'viewProfile.deactivate' | translate}}
+        </button>
+        <button *ngIf="userData.status==statusEnum.UNACTIVATED && !isOwn &&
+          (role == roleEnum.ADMIN || role == roleEnum.SUPER_ADMIN)" class="btn btn-warning btn-block"
+                (click)="changeStatus()">
+          {{'viewProfile.activate' | translate}}
+        </button>
+      </div>
+      <div class="col-lg-7">
+          <div class="col-lg-12 col-md-3 mx-auto">
+            <table class="table table-hover h5">
+              <tbody>
+              <tr class="table-borderless">
+                <td style="text-align: left">{{'viewProfile.login' | translate}}</td>
+                <td style="text-align: left" class="word-break">{{userData.login}}</td>
+
+              </tr>
+
+              <tr>
+                <td style="text-align: left">{{'viewProfile.firstName' | translate}}</td>
+                <td style="text-align: left" class="word-break">{{userData.firstName}}
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: left">{{'viewProfile.lastName' | translate}}</td>
+                <td style="text-align: left" class="word-break">{{userData.secondName}}</td>
+              </tr>
+              <tr>
+                <td style="text-align: left">{{'viewProfile.description' | translate}}</td>
+                <td style="text-align: left" class="word-break">{{userData.profile}}
+                </td>
+              </tr>
+              <tr *ngIf="userData.role == roleEnum.USER">
+                <td style="text-align: left">{{'viewProfile.score' | translate}}</td>
+                <td style="text-align: left"> {{userData.score}}
+                  <img src="../../assets/img/score.png" width="30" height="30"/></td>
+              </tr>
+
+              </tbody>
+            </table>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-100" align="center">
+    <div *ngIf="userData.role == roleEnum.USER">
+      <app-achievements-list [currentId]="id" ></app-achievements-list>
+    </div>
+  </div>
+</div>
+
+

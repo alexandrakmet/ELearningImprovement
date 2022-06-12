@@ -1,0 +1,43 @@
+.time_date {
+  color: #747474;
+  display: block;
+  font-size: 12px;
+  margin: 8px 0 0;
+}
+
+.login {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 1px;
+}
+
+.received_msg {
+  background: #ebebeb none repeat scroll 0 0;
+  border-radius: 3px;
+  color: #646464;
+  font-size: 14px;
+  margin: 0;
+  padding: 5px 10px 5px 12px;
+  width: 100%;
+}
+
+.sent_msg {
+  background: #fff693 none repeat scroll 0 0;
+  border-radius: 3px;
+  font-size: 14px;
+  margin: 0;
+  color: #323640;
+  padding: 5px 10px 5px 12px;
+  width: 100%;
+}
+
+.msg_history {
+  height: 70vh;
+  overflow-y: auto;
+}
+
+.avatar {
+  height: 100% !important;
+  width: 100% !important;
+}

@@ -1,0 +1,61 @@
+
+<div class="wrapper">
+  <!-- Sidebar Holder -->
+  <nav id="sidebar">
+    <div class="sidebar-brand">
+      <img src='assets/img/elearning.png' routerLink="../home" class="logo-image" alt="Qucat">
+    </div>
+<hr>
+    <ul class="sidebar-nav components pl-4">
+      <li *ngIf="authenticationService.isAuthenticated()">
+        <a routerLink="../profile">{{'SIDENAV.PROFILE' | translate}}</a>
+      </li>
+      <li *ngIf="false && securityService.getCurrentRole()==roleEnum.USER && authenticationService.isAuthenticated()">
+        <a routerLink="../friends">{{'SIDENAV.FRIENDS' | translate}}</a>
+      </li>
+      <li *ngIf="securityService.getCurrentRole()==roleEnum.USER && authenticationService.isAuthenticated()">
+        <a routerLink="../chats">{{'SIDENAV.CHATS' | translate}}</a>
+      </li>
+      <li *ngIf="false && securityService.getCurrentRole()==roleEnum.USER && authenticationService.isAuthenticated()">
+        <a routerLink="../activities">{{'SIDENAV.ACTIVITY' | translate}}</a>
+      </li>
+      <li *ngIf="securityService.getCurrentRole()==roleEnum.USER">
+        <a routerLink="../userQuizzes">{{'SIDENAV.MY_QUIZZES' | translate}}</a>
+      </li>
+      <li *ngIf="false && authenticationService.isAuthenticated()">
+        <a routerLink="../profile/dashboard">{{'SIDENAV.STATISTIC' | translate}}</a>
+      </li>
+      <li *ngIf="true && authenticationService.isAuthenticated()">
+        <a routerLink="../groups">{{'SIDENAV.GROUPS' | translate}}</a>
+      </li>
+      <li *ngIf="false && authenticationService.isAuthenticated()">
+        <a routerLink="../quizzes">{{'SIDENAV.QUIZZES' | translate}}</a>
+      </li>
+      <li *ngIf="false && authenticationService.isAuthenticated()">
+        <a routerLink="../announcements">{{'SIDENAV.ANNOUNCEMENTS' | translate}}</a>
+      </li>
+      <li *ngIf="false &&securityService.getCurrentRole()==roleEnum.USER && authenticationService.isAuthenticated()">
+        <a routerLink="../top">{{'SIDENAV.TOP' | translate}}</a>
+      </li>
+      <li *ngIf="false &&(securityService.getCurrentRole()==roleEnum.ADMIN || securityService.getCurrentRole()==roleEnum.ADMIN) && authenticationService.isAuthenticated()">
+        <a routerLink="../achievements/create">{{'SIDENAV.ACHIEVEMENT' | translate}}</a>
+      </li>
+      <li *ngIf="false &&securityService.getCurrentRole() == roleEnum.SUPER_ADMIN && authenticationService.isAuthenticated()">
+        <a routerLink="../createAdmin">{{'SIDENAV.CREATE_ADMIN' | translate}}</a>
+      </li>
+      <li *ngIf="false &&securityService.getCurrentRole() == roleEnum.ADMIN && authenticationService.isAuthenticated()">
+        <a routerLink="../createAdmin">{{'SIDENAV.CREATE_MODER' | translate}}</a>
+      </li>
+    </ul>
+
+   <!-- <ul class="list-unstyled CTAs">
+      <li>
+        <a href="https://github.com/Yevhenii-Babiuk/Quiz" class="article">Go to source</a>
+      </li>
+    </ul>-->
+
+    <div id="scrollTop" (click)= "onScrollClick()">
+
+    </div>
+  </nav>
+</div>

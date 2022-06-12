@@ -1,0 +1,24 @@
+<button *ngIf="securityService.getCurrentRole()=='USER'" class="btn btn-warning form-control mb-3" routerLink="../createQuiz">
+  {{ 'quiz.createQuiz' | translate }}
+</button>
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-favorite" role="tab"
+       (click)="selectedTab=0" aria-controls="nav-favorite" aria-selected="true">{{'quiz.favorite'|translate}}</a>
+    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-completed" role="tab"
+       (click)="selectedTab=1" aria-controls="nav-completed" aria-selected="false">{{'quiz.completed'|translate}}</a>
+    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-created" role="tab"
+       (click)="selectedTab=2" aria-controls="nav-created" aria-selected="false">{{'quiz.created'|translate}}</a>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-favorite" role="tabpanel" aria-labelledby="nav-home-tab">
+    <app-quiz-list [quizzes]="quizzes[0]"></app-quiz-list>
+  </div>
+  <div class="tab-pane fade" id="nav-completed" role="tabpanel" aria-labelledby="nav-profile-tab">
+    <app-quiz-list [quizzes]="quizzes[1]"></app-quiz-list>
+  </div>
+  <div class="tab-pane fade" id="nav-created" role="tabpanel" aria-labelledby="nav-contact-tab">
+    <app-quiz-list [quizzes]="quizzes[2]"></app-quiz-list>
+  </div>
+</div>

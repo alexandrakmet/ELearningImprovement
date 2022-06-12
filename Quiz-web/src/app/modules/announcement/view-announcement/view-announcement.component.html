@@ -1,0 +1,51 @@
+<div class="container">
+
+  <div class="row">
+
+    <!-- Post Content Column -->
+    <div class="col-lg-10 text-justify">
+
+      <!-- Title -->
+      <div class="row">
+        <div class="col-sm-10">
+          <h1 class="mt-4">{{announcement.title}}</h1>
+        </div>
+        <div *ngIf="role!=roleEnum.USER" class="col-sm-1 mt-4">
+          <div class="btn-group" aria-label="Basic example">
+            <button class="btn btn-outline-secondary" routerLink="/announcement/{{announcement.id}}/edit">Edit</button>
+            <button *ngIf="!announcement.isPublished" type="button" class="btn btn-outline-secondary" (click)="publish()">Publish</button>
+            <button type="button" class="btn btn-outline-secondary" (click)="delete()">Delete</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Author -->
+      <p class="lead">
+        {{announcement.authorLogin}}
+      </p>
+
+      <hr>
+
+      <!-- Date/Time -->
+      <p>{{ 'ANNOUNCEMENT.POST ON' | translate }} {{announcement.createdDate | date:'MMMM d, yyyy'}}</p>
+
+      <hr>
+
+      <!-- Preview Image -->
+      <img *ngIf="announcement.imageId!=-1" class="img-fluid rounded"
+           src="data:image/jpeg;base64,{{announcement.image.src}}">
+
+      <hr>
+
+      <!-- Post Content -->
+      <p *ngIf="announcement.subtitle" class="lead">{{announcement.subtitle}}</p>
+
+      <div *ngIf="announcement.fullText">
+        {{announcement.fullText}}
+      </div>
+
+      <hr>
+    </div>
+  </div>
+</div>

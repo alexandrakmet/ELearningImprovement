@@ -1,0 +1,59 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+<nav id="header" class="navbar navbar-expand-lg navbar-light custom-nav" style="background-color: #ffc107">
+  <button type="button" id="sidebarCollapse" class="bg-warning navbar-btn" [ngClass]="{'active': isOpened}"
+          (click)="clicked()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <a class="navbar-brand ml-3" href="">
+    <img src='assets/img/worldwide.png' class="logo-image" alt="Qucat">
+  </a>
+
+  <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+          aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse bg-warning custom-collapse-nav p-3" id="basicExampleNav">
+
+    <ul class="navbar-nav mr-auto ">
+      <li class="nav-item active">
+      </li>
+    </ul>
+
+    <ul class="navbar-nav">
+      <li class="nav-item mb-2 mt-2 ml-1 mr-2">
+        <div class="languageChange ">
+          <span class="material-icons align-middle">language</span>
+          <ng-container *ngFor="let lang of translate.getLangs() let i = index">
+            <span (click)="setLang(lang)" class="changeLangEvent"
+                  [ngClass]="{active: translate.currentLang==lang}">{{lang}}</span>
+            <span *ngIf="i!=translate.getLangs().length-1">/</span>
+          </ng-container>
+        </div>
+      </li>
+
+
+
+      <li class="nav-item mb-1 mt-1 ml-2" *ngIf="authService.isAuthenticated()">
+        <app-message-menu *ngIf="securityService.getCurrentRole()==roleEnum.USER" (isMessage)="getMessage($event)"
+                          [showMessage]="showMessage"></app-message-menu>
+        <app-notification-menu *ngIf="securityService.getCurrentRole()==roleEnum.USER" (isNotification)="getNotification($event)"
+                               [showNotification]="showNotification"></app-notification-menu>
+      </li>
+
+      <li class="nav-item mb-1 mt-1 ml-2" *ngIf="!authService.isAuthenticated()">
+        <a class="nav-link" routerLink="/login" routerLinkActive="active">{{ 'HEADER.LOGIN' | translate }}</a>
+      </li>
+      <li class="nav-item mb-1 mt-1 ml-2 mr-2" *ngIf="!authService.isAuthenticated()">
+        <a class="nav-link" routerLink="/registration"
+           routerLinkActive="active">{{ 'HEADER.SIGN UP' | translate }}</a>
+      </li>
+      <li class="nav-item custom-link mb-1 mt-1 ml-2 mr-2" *ngIf="authService.isAuthenticated()">
+        <a class="nav-link" (click)="logout()" routerLinkActive="active">{{ 'HEADER.LOGOUT' | translate }}</a>
+      </li>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,8 @@
+<div *ngIf="isWaiting; else playQuiz">
+  <app-waiting-room [players]="players" [image]="game.image" [currentUser]="currentUser" [hostId]="game.hostId" (startGame)="startGame()"></app-waiting-room>
+</div>
+
+<ng-template #playQuiz>
+  <app-results *ngIf="gameResults" [currentUser]="currentUser" [gameResults]="gameResults"></app-results>
+  <app-play-question *ngIf="question" [question]="question" [questionNumber]="currQuestion" [questionsCount]="game.countQuestions" [timeLeft]="game.time" (sendAnswer)="sendAnswer($event)" ></app-play-question>
+</ng-template>

@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col">
+    <div class="text-center">
+      <img src="data:image/png;base64,{{image}}" alt="image">
+    </div>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" aria-describedby="basic-addon2"
+             value="https://qucat.herokuapp.com/#/game/{{route.snapshot.paramMap.get('gameId')}}/play" readonly #link>
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" (click)="copy(link)" type="button">{{ 'WR.COPY' | translate }}</button>
+      </div>
+    </div>
+    <div *ngIf="currentUser && currentUser.registerId==hostId">
+      <button class="btn btn-secondary form-control" type="button"
+              (click)="invitation = !invitation; loadFriends()">{{ 'CHAT.INVITE_FRIENDS' | translate }}</button>
+    </div>
+    <div *ngIf="currentUser && currentUser.registerId==hostId && invitation" class="input-group mt-2">
+      <select #mySelect (change)="onChange(mySelect.value)" class="custom-select">
+        <option selected>{{ 'CHAT.CHOOSE_FRIEND' | translate }}</option>
+        <option *ngFor="let friend of friends" [value]="friend.name">{{friend.name}}</option>
+      </select>
+      <div class="input-group-append">
+        <button class="btn btn-secondary pl-5 pr-5" type="button"
+                (click)="inviteFriend()">{{ 'CHAT.INVITE' | translate }}</button>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <ng-container *ngFor="let player of players">
+      <div *ngIf="currentUser && currentUser.login == player" class="row border border-warning rounded w-75 mx-auto mb-2">
+        <div class="col-1">
+          <img src="assets/img/waiting-room-icons/{{(player.length * 3) % 11 + 1}}.png"  class="avatar" alt="">
+        </div>
+        <div class="col-8 ml-3 mt-1" >
+        <span style="font-size: 3vh;font-family:georgia,garamond,serif;">
+          {{player}}
+        </span>
+        </div>
+      </div>
+      <div *ngIf="currentUser && currentUser.login != player" class="row border border-dark rounded w-75 mx-auto mb-2">
+        <div class="col-1">
+          <img src="assets/img/waiting-room-icons/{{(player.length * 3) % 11 + 1}}.png" height="37" class="avatar" alt="">
+        </div>
+        <div class="col-8 ml-3 mt-1" >
+        <span style="font-size: 3vh;font-family:georgia,garamond,serif;">
+          {{player}}
+        </span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<div *ngIf="currentUser && currentUser.registerId==hostId; else wait" class="text-center">
+  <button (click)="start()" class="btn-lg btn-dark my-5 w-50">{{ 'WR.START' | translate }}</button>
+</div>
+<ng-template #wait>
+  <app-spin-cat class="p-3" [show]="true" [text]="'WR.WAIT'"></app-spin-cat>
+</ng-template>
+

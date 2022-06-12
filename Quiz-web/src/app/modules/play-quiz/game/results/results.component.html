@@ -1,0 +1,21 @@
+<ng-container>
+  <table matSort (matSortChange)="sortData($event)" class="table table-striped">
+    <thead>
+    <tr>
+      <th mat-sort-header="login">Login</th>
+      <th mat-sort-header="score">Score</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let singleResult of sortedData" [ngClass]="{'font-weight-bold':singleResult.id==currentUser.id}">
+      <td>{{singleResult.login}}</td>
+      <td>{{singleResult.score}}</td>
+    </tr>
+    </tbody>
+  </table>
+</ng-container>
+
+<div *ngIf="gameResults.isFinal">
+  <img src='assets/img/endGame.gif' class="w-75 mh-100 mx-auto d-block p-3" alt="End game">
+</div>

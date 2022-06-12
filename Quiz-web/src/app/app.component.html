@@ -1,0 +1,16 @@
+<div>
+  <alert></alert>
+</div>
+
+<title>ELearning</title>
+
+<div class="wrapper">
+
+  <nav id="sidebar" [ngClass]="{'active': isOpened}">
+    <app-sidenav></app-sidenav>
+  </nav>
+  <div id="content">
+    <app-header [isOpened]="isOpened" (buttonClicked)="onSidebarClick()"></app-header>
+    <router-outlet></router-outlet>
+  </div>
+</div>

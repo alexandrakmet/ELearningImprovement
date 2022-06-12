@@ -1,0 +1,97 @@
+<div *ngIf="subscribeTimer>-1" class="container" (keydown.enter)="nextQuestion()">
+
+  <ng-container *ngIf="question">
+    <div class="form-control h-auto row mx-0 my-1 mt-5 p-4 border-dark border ">
+      <div class="d-inline">
+        <h5 *ngIf="questionNumber" class="d-inline">{{questionNumber}}/{{questionsCount}}</h5>
+        <h5 class="d-inline offset-10">{{ subscribeTimer | timerFormat}}</h5>
+      </div>
+
+      <div class="col p-md-3" *ngIf="question.content">
+        <h2 class="text-center">{{question.content}}</h2>
+      </div>
+
+      <img *ngIf="question.image && question.imageId!=-1" class="w-50 mh-100 mx-auto d-block p-1"
+           src="data:image/jpeg;base64,{{question.image.src}}" alt="">
+
+      <div class="p-3 m-2">
+        <div *ngIf="question.type=='TRUE_FALSE'" class="row">
+
+          <div class="form-check col p-3 m-2">
+            <label class="btn bg-light btn-block p-3">
+              <input type="radio" class="form-check-input" name="optradio" (click)="setTrueFalseOption(true)"
+                     [disabled]="isSend">
+              {{ 'quiz.questionTypes.true' | translate }}
+            </label>
+          </div>
+
+          <div class="form-check col p-3 m-2">
+            <label class="btn bg-light btn-block p-3">
+              <input type="radio" class="form-check-input" name="optradio" (click)="setTrueFalseOption(false)"
+                     [disabled]="isSend">
+              {{ 'quiz.questionTypes.false' | translate }}
+            </label>
+          </div>
+
+        </div>
+
+        <div *ngIf="question.type=='SELECT_OPTION'">
+          <div class="row mx-0 d-flex justify-content-center"
+               *ngFor="let questionOption of question.options; let i = index">
+
+            <div class="col p-1 md-2">
+              <div class="form-check btn bg-light btn-block p-3" (click)="setOption(questionOption.id)">
+
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck{{i}}" [disabled]="isSend"
+                       [checked]="this.answer.options.indexOf(questionOption.id) != -1">
+                <label class="form-check-label" for="defaultCheck{{i}}">
+                  {{questionOption.content}}
+                </label>
+                <img src="data:image/jpeg;base64,{{questionOption.image.src}}" class="w-25 mx-auto d-inline p-3" alt=""
+                     *ngIf="questionOption.imageId!=-1 && questionOption.image">
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div *ngIf="question.type=='ENTER_ANSWER'" class="form-group">
+          <input type="text" class="form-control" placeholder="Enter your answer here" [(ngModel)]="answerText"
+                 [disabled]="isSend">
+        </div>
+
+        <div *ngIf="question.type=='SELECT_SEQUENCE'">
+          <div class="row mx-0" *ngFor="let questionOption of question.options">
+
+            <div class="form-group p-3 m-2 border border-light bg-light col">
+
+              <div class="row">
+                <select #sel class="form-control col-2" [disabled]="isSend"
+                        (change)="setSequence(questionOption.id, sel.value)">
+                  <option></option>
+                  <option *ngFor="let qo of question.options; let i = index"
+                          [value]="i+1">{{i + 1}}</option>
+                </select>
+                <label class="col">{{questionOption.content}}</label>
+              </div>
+
+              <img  *ngIf="questionOption.imageId!=-1 && questionOption.image "
+                   src="data:image/jpeg;base64,{{questionOption.image.src}}" class="w-25 mx-auto row p-3" alt="">
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <button type="button" (click)="nextQuestion()" class="btn btn-success btn-lg btn-block" *ngIf="question.options"
+              [disabled]="isSend">
+        {{ 'quiz.NEXT' | translate }} >
+      </button>
+
+      <br>
+      <app-spin-cat [show]="isSend" [text]="'Waiting for other players...'"></app-spin-cat>
+
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,26 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+<div class="row mx-0">
+  <ng-container *ngFor="let quiz of quizzes">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-12 card border-0" routerLink="/quiz/{{quiz.id}}">
+      <img *ngIf="quiz.image" class="card-img-top" src="data:image/jpeg;base64,{{quiz.image.src}}"
+           alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{quiz.name}}</h5>
+        <div class="card-text">
+          <small class="text-muted">
+          <span *ngFor="let tag of quiz.tags; let isLast=last">
+            {{tag.name}}{{isLast ? '' : ', '}}
+          </span>
+          </small>
+          <p *ngIf="quiz.category" class="text-muted">{{quiz.category.name}}</p>
+
+          <p><span class="material-icons ">emoji_events</span>
+            {{quiz.maxScore}}
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

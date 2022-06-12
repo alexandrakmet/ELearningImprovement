@@ -1,0 +1,52 @@
+<div class="card mx-auto mt-5 w-75">
+  <div class="card-header text-center bg-warning">
+    <h3>{{ 'SETTING.TITLE' | translate }}</h3>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">
+      <div class="checkbox checkbox-warning">
+        {{ 'SETTING.TIME' | translate }}
+          <input [(ngModel)]="game.time" type="number" class="border border-dark rounded w-25"
+                 value="15" min="5" max="60">
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="checkbox checkbox-warning">
+        <input [(ngModel)]="game.questionAnswerSequence" id="checkbox2" type="checkbox" class="styled">
+        <label for="checkbox2">
+          {{ 'SETTING.QUESTION FIRST' | translate }}
+        </label>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="checkbox checkbox-warning">
+        <input [(ngModel)]="game.quickAnswerBonus" id="checkbox3" type="checkbox" class="styled">
+        <label for="checkbox3">
+          {{ 'SETTING.FIRST BONUS' | translate }}
+        </label>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="checkbox checkbox-warning">
+        <input [(ngModel)]="game.combo" id="checkbox4" type="checkbox" class="styled">
+        <label for="checkbox4">
+          {{ 'SETTING.COMBO BONUS' | translate }}
+        </label>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="checkbox checkbox-warning">
+        <input [(ngModel)]="game.intermediateResult" id="checkbox5" type="checkbox" class="styled">
+        <label for="checkbox5">
+          {{ 'SETTING.INTERMEDIATE RESULT' | translate }}
+        </label>
+      </div>
+    </li>
+  </ul>
+</div>
+<div *ngIf="isInvalid" class="w-100 alert border-danger my-4 text-center">
+  {{message}}
+</div>
+<div class="text-center">
+  <button class="btn btn-warning w-50 mt-4" (click)="submit()">{{ 'SETTING.PLAY' | translate }}</button>
+</div>

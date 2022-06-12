@@ -1,0 +1,138 @@
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-personal-data" role="tab"
+       aria-controls="nav-favorite" aria-selected="true">{{'editProfile.editPersonalData' | translate}}</a>
+    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-password" role="tab"
+       aria-controls="nav-completed" aria-selected="false">{{'editProfile.changePassword' | translate}}</a>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-personal-data" role="tabpanel" aria-labelledby="nav-home-tab">
+
+    <div class="container">
+      <h3 class="col-sm-10 text-center offset-md-1 mt-4">{{'editProfile.editPersonalData' | translate}}</h3>
+      <div class="form-horizontal align-content-center">
+        <div class="form-group required"><label
+          class="col-md-2 control-label offset-md-1">{{'editProfile.firstName' | translate}}</label>
+          <div class="col-sm-10 offset-md-1">
+            <input type="text" placeholder="First Name" class="form-control" [(ngModel)]="userData.firstName"
+                   #firstname="ngModel"
+                   pattern="^[a-zA-Zа-яА-Яієї']{2,25}$" aria-describedby="fnHelp">
+            <small id="fnHelp" class="form-text text-danger" [hidden]="firstname.valid && userData.firstName.length>1 || firstname.untouched">
+              {{'AUTHENTICATION.registration.noValidFirstName'|translate}}
+            </small>
+          </div>
+        </div>
+        <div class="form-group required"><label
+          class="col-md-2 control-label offset-md-1">{{'editProfile.lastName' | translate}}</label>
+          <div class="col-sm-10 offset-md-1">
+            <input type="text" placeholder="Last Name" class="form-control" [(ngModel)]="userData.secondName"
+                   #lastname="ngModel"
+                   pattern="^[a-zA-Zа-яА-Яієї']{2,25}$" aria-describedby="lnHelp">
+            <small id="lnHelp" class="form-text text-danger" [hidden]="lastname.valid && userData.secondName.length>1  || lastname.untouched">
+              {{'AUTHENTICATION.registration.noValidLastName'|translate}}
+            </small>
+          </div>
+        </div>
+        <div class="form-group required"><label class="col-md-2 control-label offset-md-1">E-mail</label>
+          <div class="col-sm-10 offset-md-1">
+            <input type="email" placeholder="Email" class="form-control" [(ngModel)]="userData.mail"
+                   #email="ngModel"
+                   pattern="^[A-z\d._]+@[A-z]+\.[A-z]+$" aria-describedby="emailHelp">
+            <small id="emailHelp" class="form-text text-danger" [hidden]="email.valid && userData.mail.length>1 || email.untouched">
+              {{'AUTHENTICATION.registration.noValidMail'|translate}}
+            </small>
+          </div>
+        </div>
+        <div class="form-group"><label class="col-md-2 control-label offset-md-1">{{'editProfile.description' | translate}}</label>
+          <div class="col-sm-10 offset-md-1">
+            <input type="text" placeholder="Description" class="form-control" [(ngModel)]="userData.profile"
+                   #profile="ngModel"
+                    aria-describedby="profileHelp">
+            <small id="profileHelp" class="form-text text-danger" [hidden]="userData.profile.length<=100">
+              {{'editProfile.noValidProfile'|translate}}
+            </small>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-check col-sm-5 offset-md-1">
+            <button
+              [disabled]="!firstname.valid || !lastname.valid ||  !email.valid || userData.secondName.length<2 ||
+               userData.firstName.length<2 || userData.mail.length<2 || !profile.valid || userData.profile.length>100"
+              (click)="edit(id,firstname.value, lastname.value, email.value, profile.value)"
+              class="btn btn-warning btn-block col-sm-12">
+              {{'editProfile.save' | translate}}
+            </button>
+          </div>
+
+          <div class="form-check col-sm-5">
+            <button routerLink="../profile"
+                    class="btn btn-outline-secondary btn-block active col-sm-12">
+              {{'editProfile.cancel' | translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="tab-pane fade" id="nav-password" role="tabpanel" aria-labelledby="nav-profile-tab">
+    <div class="container">
+      <h3 class="col-sm-10 text-center offset-md-1 mt-4">{{'editProfile.changePassword' | translate}}</h3>
+      <div class="form-horizontal align-content-center">
+        <div class="form-group required"><label
+          class="col-md-2 control-label offset-md-1">{{'editProfile.currentPassword' | translate}}</label>
+          <div class="col-sm-10 offset-md-1">
+            <input type="password" placeholder="Current password" class="form-control" autofocus #currentPassword>
+          </div>
+        </div>
+
+        <div class="form-group required"><label
+          class="col-md-2 control-label offset-md-1">{{'editProfile.newPassword' | translate}}</label>
+          <div class="col-sm-10 offset-md-1">
+            <input type="password" placeholder="Password" class="form-control"
+                   [(ngModel)]="passwordNew"
+                   #newPassword="ngModel"
+                   pattern="^.{8,}$" aria-describedby="passHelp">
+            <small id="passHelp" class="form-text text-danger" [hidden]="newPassword.valid || newPassword.untouched">
+              {{'AUTHENTICATION.registration.noValidPassword'|translate}}
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group required"><label
+          class="col-md-2 control-label offset-md-1">{{'editProfile.confirmPassword' | translate}}</label>
+          <div class="col-sm-10 offset-md-1">
+            <input type="password" placeholder="Confirm password" class="form-control" autofocus #confirmPassword>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="form-check col-sm-5 offset-md-1">
+            <button
+              [disabled]="!newPassword.valid"
+              (click)="checkPasswords(currentPassword.value,newPassword.value, confirmPassword.value)"
+              class="btn btn-warning btn-block col-sm-12">
+              {{'editProfile.save' | translate}}
+            </button>
+          </div>
+
+          <div class="form-check col-sm-5">
+            <button routerLink="../profile"
+                    class="btn btn-outline-secondary btn-block active col-sm-12">
+              {{'editProfile.cancel' | translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+

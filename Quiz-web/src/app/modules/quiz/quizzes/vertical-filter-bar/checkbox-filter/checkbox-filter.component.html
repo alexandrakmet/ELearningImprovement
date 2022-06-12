@@ -1,0 +1,11 @@
+<div *ngFor="let filterItem of model.options" class="custom-control custom-checkbox">
+  <input
+  type="checkbox"
+  class="custom-control-input"
+  id="checkbox-{{model.identifier}}-{{filterItem}}"
+  [checked]="model.filterValue.indexOf(filterItem) != -1"
+  #checkbox
+  (change)="checkChanged(filterItem, $event, checkbox.checked)"
+  >
+  <label for="checkbox-{{model.identifier}}-{{filterItem}}" class="custom-control-label">{{ filterItem }}</label>
+</div>

@@ -1,0 +1,10 @@
+
+.post-preview > .post-meta {
+  font-style: italic;
+  margin-top: 0;
+  color: #868e96;
+}
+
+.custom{
+  cursor: pointer;
+}

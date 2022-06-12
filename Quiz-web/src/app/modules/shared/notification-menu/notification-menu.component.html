@@ -1,0 +1,82 @@
+<div class="notification-wrapper ">
+  <div class="notification-btn" (click)="openNotification(!showNotification); changeShowMenu(showNotification)">
+    <div matBadge="{{unviewedNotificationCount}}" matBadgeColor="warn" *ngIf="unviewedNotificationCount > 0">
+      <span class="fas fa-bell" style="font-size: 20px; padding: 0"></span>
+    </div>
+    <div *ngIf="unviewedNotificationCount == 0">
+      <span class="fas fa-bell" style="font-size: 20px; padding: 0"></span>
+    </div>
+
+  </div>
+
+  <div *ngIf="showNotification" class="notification-content ">
+    <div class="notification-header">
+      <div>
+       <span (click)="openSettings(!showSettings)">
+         <div class="fas fa-cog"> </div>
+       </span>
+        <span class="label"> {{'NOTIFICATIONS.NOTIFICATION_TITLE' | translate}}</span>
+        <span (click)="deleteAllNotification()">
+         <div class="fas fa-trash"> </div>
+       </span>
+      </div>
+
+    </div>
+    <div *ngIf="showSettings" class="notification-setting">
+      <div>
+        {{'NOTIFICATIONS.SETTING_TITLE' | translate}}
+      </div>
+      <div class="checkbox checkbox-warning">
+        <input [ngModel]="notificationFilters.newAnnouncement"
+               (click)="notificationFilters.newAnnouncement = !notificationFilters.newAnnouncement; updateSettings()"
+               id="checkbox1" type="checkbox" class="styled">
+        <label for="checkbox1">
+          {{'NOTIFICATIONS.CHECKBOX_1' | translate}}
+        </label>
+      </div>
+      <div class="checkbox checkbox-warning">
+        <input [(ngModel)]="notificationFilters.newQuiz"
+               (click)="notificationFilters.newQuiz = !notificationFilters.newQuiz; updateSettings()" id="checkbox2"
+               type="checkbox" class="styled">
+        <label for="checkbox2">
+          {{'NOTIFICATIONS.CHECKBOX_2' | translate}}
+        </label>
+      </div>
+      <div class="checkbox checkbox-warning">
+        <input [(ngModel)]="notificationFilters.gameInvitation"
+               (click)="notificationFilters.gameInvitation = !notificationFilters.gameInvitation; updateSettings()"
+               id="checkbox3" type="checkbox" class="styled">
+        <label for="checkbox3">
+          {{'NOTIFICATIONS.CHECKBOX_3' | translate}}
+        </label>
+      </div>
+      <div class="checkbox checkbox-warning">
+        <input [(ngModel)]="notificationFilters.friendInvitation"
+               (click)="notificationFilters.friendInvitation = !notificationFilters.friendInvitation; updateSettings()"
+               id="checkbox4" type="checkbox" class="styled">
+        <label for="checkbox4">
+          {{'NOTIFICATIONS.CHECKBOX_4' | translate}}
+        </label>
+      </div>
+    </div>
+    <div class="notification-container shadow" style="border-radius: 4px;">
+      <ng-container *ngFor="let notification of notifications">
+        <div class="notification-item" (mouseover)="setViewed(notification)">
+          <button type="button" (click)="deleteNotification(notification.linkAction, notification.id)" class="close">
+            ×
+          </button>
+          <a routerLink="{{notification.authorLink}}" class="post-title mt-4 authorLinkFont">
+            {{notification.author}}
+            <br>
+          </a>
+          <span class="lead">
+
+           {{'NOTIFICATIONS.' + notification.action | translate}}<br>
+        </span>
+          <a routerLink="{{notification.actionLink}}" class="linkFont">{{'NOTIFICATIONS.REVIEW' | translate}}<br></a>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+

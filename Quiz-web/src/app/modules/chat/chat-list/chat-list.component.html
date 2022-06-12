@@ -1,0 +1,27 @@
+<button *ngIf="false && !creation" class="form-control btn btn-warning mb-3" (click)="creation = !creation;">{{ 'CHAT.CREATE_CHAT' | translate }}</button>
+<div *ngIf="creation" class="input-group mb-3">
+  <input type="text" class="form-control" [(ngModel)]="chat.name" placeholder="{{ 'CHAT.CREATE_NAME' | translate }}">
+  <div class="input-group-append">
+    <button class="btn btn-warning" type="button" (click)="createChat()">{{ 'CHAT.CREATE' | translate }}</button>
+  </div>
+</div>
+
+<!--<input type="text" placeholder="Search chat" class="form-control border border-warning  mb-3">-->
+
+<ng-container *ngFor="let chat of chats">
+  <div class="chat_list" routerLink="../chat/{{chat.id}}">
+    <img src="assets/img/chat-icons/{{chat.id%51}}.png" class="avatar" alt="Avatar">
+    <div class="chat_ib">
+      <h5>{{chat.name}}
+        <span class="chat_date">{{  chat.creationDate | date: 'medium' : '' : translate.currentLang }}</span>
+      </h5>
+      <p *ngIf="chat.users">{{chat.users.length}} {{ 'CHAT.PARTICIPANTS' | translate }}</p>
+    </div>
+  </div>
+</ng-container>
+
+<div class="w-75 d-block mx-auto">
+  <app-spin-cat class="p-3" [show]="isWaiting" [text]="'CHAT.WAIT_LOAD'"></app-spin-cat>
+</div>
+
+

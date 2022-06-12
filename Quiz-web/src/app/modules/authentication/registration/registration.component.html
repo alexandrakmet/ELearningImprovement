@@ -1,0 +1,93 @@
+<div class="container custom">
+
+  <h3 class="text-center">{{'AUTHENTICATION.registration.registration'|translate}}</h3>
+
+  <div class="form-group row">
+    <div class="col"></div>
+    <div class="col-9">
+      <input type="text" placeholder="{{'AUTHENTICATION.registration.firstName'|translate}}"
+             class="form-control" [(ngModel)]="user.firstName" #firstname="ngModel"
+             pattern="^[a-zA-Zа-яА-Яієї']{2,25}$" aria-describedby="fnHelp">
+      <small id="fnHelp" class="form-text text-danger" [hidden]="firstname.valid || firstname.untouched">
+        {{'AUTHENTICATION.registration.noValidFirstName'|translate}}
+      </small>
+    </div>
+    <div class="col"></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col"></div>
+    <div class="col-9">
+      <input type="text" placeholder="{{'AUTHENTICATION.registration.lastName'|translate}}"
+             class="form-control" [(ngModel)]="user.secondName" #lastname="ngModel"
+             pattern="^[a-zA-Zа-яА-Яієї']{2,25}$" aria-describedby="lnHelp">
+      <small id="lnHelp" class="form-text text-danger" [hidden]="lastname.valid || lastname.untouched">
+        {{'AUTHENTICATION.registration.noValidLastName'|translate}}
+      </small>
+    </div>
+    <div class="col"></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col"></div>
+    <div class="col-9">
+      <input type="text" placeholder="{{'AUTHENTICATION.login'|translate}}"
+             class="form-control" [(ngModel)]="user.login" aria-describedby="lHelp" #login="ngModel">
+      <small id="lHelp" class="form-text text-danger" [hidden]="login.untouched || (user.login.length > 0)">
+        {{'AUTHENTICATION.registration.noValidLogin'|translate}}
+      </small>
+    </div>
+    <div class="col"></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col"></div>
+    <div class="col-9">
+      <input type="email" placeholder="{{'AUTHENTICATION.email'|translate}}" class="form-control" name="email"
+             [(ngModel)]="user.mail" #email="ngModel"
+             pattern="^[A-z\d._]+@[A-z]+\.[A-z]+$" aria-describedby="emailHelp">
+      <small id="emailHelp" class="form-text text-danger" [hidden]="email.valid || email.untouched">
+        {{'AUTHENTICATION.registration.noValidMail'|translate}}
+      </small>
+    </div>
+    <div class="col"></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col"></div>
+    <div class="col-9">
+      <input type="password" placeholder="{{'AUTHENTICATION.password'|translate}}"
+             class="form-control" [(ngModel)]="user.password" #password="ngModel"
+             pattern="^.{8,}$" aria-describedby="passHelp">
+      <small id="passHelp" class="form-text text-danger" [hidden]="password.valid || password.untouched">
+        {{'AUTHENTICATION.registration.noValidPassword'|translate}}
+      </small>
+    </div>
+    <div class="col"></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col"></div>
+    <div class="col-9">
+      <input type="password" placeholder="{{'AUTHENTICATION.registration.confirmPassword'|translate}}"
+             class="form-control" [(ngModel)]="confirmPassword" aria-describedby="cpHelp">
+      <small id="cpHelp" class="form-text text-danger"
+             [hidden]="password.untouched || user.password == confirmPassword">
+        {{'AUTHENTICATION.registration.noMatchPassword'|translate}}
+      </small>
+    </div>
+    <div class="col"></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col"></div>
+    <button
+      [disabled]="!firstname.valid || !lastname.valid || !password.valid || !email.valid || !(user.password == confirmPassword) || (user.login.length < 1)"
+      (click)="registerUser()"
+      class="btn btn-warning btn-block col-9">
+      {{'AUTHENTICATION.registration.register'|translate}}
+    </button>
+    <div class="col"></div>
+  </div>
+
+</div>
