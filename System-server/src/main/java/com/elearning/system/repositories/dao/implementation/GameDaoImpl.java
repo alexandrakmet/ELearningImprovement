@@ -76,12 +76,6 @@ public class GameDaoImpl implements GameDao {
     }
 
     @Override
-    public int getHostId(String gameId) {
-        return jdbcTemplate.queryForObject(queries.get("getHostId"),
-                new Object[]{gameId}, Integer.class);
-    }
-
-    @Override
     public int saveUser(UserDto user) {
         log.info("save user " + user);
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -141,36 +135,6 @@ public class GameDaoImpl implements GameDao {
     }
 
     @Override
-    public void saveQuestion(Question question) {
-        try {
-            jdbcTemplate.update(queries.get("saveQuestion"),
-                    question.getId(),
-                    question.getQuizId(),
-                    question.getType().name().toLowerCase(),
-                    question.getContent(),
-                    question.getScore(),
-                    question.getImageId());
-        } catch (DuplicateKeyException e) {
-            log.warn("question is already exist id={} ", question.getId());
-        }
-    }
-
-    @Override
-    public void saveOption(QuestionOption option) {
-        try {
-            jdbcTemplate.update(queries.get("saveOption"),
-                    option.getId(),
-                    option.getQuestionId(),
-                    option.getContent(),
-                    option.isCorrect(),
-                    option.getSequenceOrder(),
-                    option.getImageId());
-        } catch (DuplicateKeyException e) {
-            log.warn("question option is already exist id={} ", option.getId());
-        }
-    }
-
-    @Override
     public void saveQuestions(List<Question> questions) {
         saveQuestionsImage(questions);
         try {
@@ -218,16 +182,6 @@ public class GameDaoImpl implements GameDao {
             return -1;
         }
         return (int) Objects.requireNonNull(keyHolder.getKeys()).get("id");
-    }
-
-    @Override
-    public void updateGameQuestion(GameQuestionDto gameQuestion) {
-        jdbcTemplate.update(queries.get("updateGameQuestion"),
-                gameQuestion.getGameId(),
-                gameQuestion.getQuestionId(),
-                gameQuestion.isCurrent(),
-                gameQuestion.getFinishTime(),
-                gameQuestion.getId());
     }
 
     @Override
@@ -290,12 +244,6 @@ public class GameDaoImpl implements GameDao {
         } catch (NullPointerException e) {
             return 0;
         }
-    }
-
-    @Override
-    public UserDto getUserById(int id) {
-        return jdbcTemplate.queryForObject(queries.get("getUserById"), new Object[]{id},
-                new UserDtoMapper());
     }
 
     private Object[] getParamsToInsertOptions(List<QuestionOption> questionOptions) {

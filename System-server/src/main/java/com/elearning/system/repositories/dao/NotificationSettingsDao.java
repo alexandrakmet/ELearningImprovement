@@ -8,7 +8,5 @@ import java.util.List;
 public interface NotificationSettingsDao extends GenericDao<NotificationSettings> {
     String TABLE_NAME = "notification_settings";
 
-    List<Notification> getByUserId(int id);
-
     NotificationSettings getSettingsByUserId(int userId);
 }

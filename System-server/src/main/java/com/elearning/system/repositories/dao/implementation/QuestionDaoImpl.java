@@ -55,13 +55,6 @@ public class QuestionDaoImpl extends GenericDaoImpl<Question> implements Questio
     }
 
     @Override
-    public List<Question> getByQuizId(int id) {
-        return jdbcTemplate.query(questionQueries.get("getByQuizId"),
-                new Object[]{id},
-                new QuestionMapper());
-    }
-
-    @Override
     public void deleteQuestions(List<Integer> questionId) {
 
         jdbcTemplate.update(getQueryForInsertQuestions(questionId),

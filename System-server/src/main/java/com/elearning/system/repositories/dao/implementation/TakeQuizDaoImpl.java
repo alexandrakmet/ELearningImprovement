@@ -28,16 +28,6 @@ public class TakeQuizDaoImpl extends GenericDaoImpl<TakeQuiz> implements TakeQui
         super(new TakeQuizMapper(), TABLE_NAME);
     }
 
-
-    @Override
-    public List<TakeQuiz> getUserCompletedQuizzes(int userId) {
-        return jdbcTemplate.query(
-                queries.get("getAllInfo"),
-                new Object[]{userId},
-                new TakeQuizMapper()
-        );
-    }
-
     @Override
     public TakeQuiz getUserResultByQuiz(int userId, int quizId) {
         TakeQuiz takeQuiz;

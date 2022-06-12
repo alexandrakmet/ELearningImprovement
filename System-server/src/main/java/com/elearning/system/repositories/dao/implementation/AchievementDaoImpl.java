@@ -74,17 +74,4 @@ public class AchievementDaoImpl extends GenericDaoImpl<Achievement> implements A
         return String.join(" AND ", conditions);
     }
 
-    @Override
-    public List<UserAchievement> getNewUserAchievements(List<Achievement> achievements) {
-        String sqlT = achievementQueries.get("getNewUserAchievements");
-        List<String> sql = new ArrayList<>();
-        List<Object> objects = new ArrayList<>();
-        for (Achievement achievement : achievements) {
-            sql.add(String.format(sqlT, generateCondition(achievement)));
-            objects.add(achievement.getId());
-        }
-
-        return jdbcTemplate.query(String.join(" UNION ALL ", sql), objects.toArray(),
-                new UserAchievementMapper());
-    }
 }

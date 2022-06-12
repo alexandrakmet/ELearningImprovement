@@ -18,8 +18,6 @@ public interface GameDao {
 
     Question getQuestionById(int id);
 
-    int getHostId(String gameId);
-
     int saveUser(UserDto user);
 
     int saveAnswer(AnswerDto answer);
@@ -28,10 +26,6 @@ public interface GameDao {
 
     void saveQuiz(QuizDto quiz);
 
-    void saveQuestion(Question question);
-
-    void saveOption(QuestionOption option);
-
     void saveQuestions(List<Question> questions);
 
     void saveQuestionOptions(List<QuestionOption> questionOptions);
@@ -39,8 +33,6 @@ public interface GameDao {
     void saveImage(Image image);
 
     int saveGameQuestion(String gameId, int questionId);
-
-    void updateGameQuestion(GameQuestionDto gameQuestion);
 
     void deleteGame(String id);
 
@@ -59,6 +51,4 @@ public interface GameDao {
     GameQuestionDto getGameQuestion(String gameId, int random);
 
     int getCountGameQuestion(String gameId);
-
-    UserDto getUserById(int id);
 }

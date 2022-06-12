@@ -86,13 +86,6 @@ public class QuizDaoImpl extends GenericDaoImpl<Quiz> implements QuizDao {
                 quiz.getId()};
     }
 
-
-    @Override
-    public List<Quiz> getAllFullInfo() {
-        return jdbcTemplate.query(quizQueries.get("getFullInfo"),
-                new QuizExtractor());
-    }
-
     @Override
     public Quiz getFullInfo(int id) {
         String getQuery = quizQueries.get("getFullInfo").replace(";", " WHERE quiz.id = ?;");
@@ -123,26 +116,6 @@ public class QuizDaoImpl extends GenericDaoImpl<Quiz> implements QuizDao {
     @Override
     public void removeTag(int quizId, int tagId) {
         jdbcTemplate.update(quizQueries.get("removeTag"), quizId, tagId);
-    }
-
-    @Override
-    public boolean isUsersFavorite(int userId, int quizId) {
-        try {
-            jdbcTemplate.queryForObject(quizQueries.get("isUsersFavorite"),
-                    new Object[]{userId, quizId}, Integer.class);
-        } catch (EmptyResultDataAccessException e) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public Page<Quiz> getQuizByStatus(QuizStatus status, Pageable pageable) {
-        int rowTotal = jdbcTemplate.queryForObject(quizQueries.get("rowCountByStatus"),
-                new Object[]{status.name().toLowerCase()}, Integer.class);
-        List<Quiz> quizzes = jdbcTemplate.query(quizQueries.get("getPageByStatus"),
-                new QuizMapper());
-        return new PageImpl<>(quizzes, pageable, rowTotal);
     }
 
     private PreparedStatement getPagePreparedStatement(List<Integer> id) {

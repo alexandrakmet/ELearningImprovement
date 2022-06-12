@@ -29,11 +29,6 @@ public class MessageDaoImpl extends GenericDaoImpl<Message> implements MessageDa
     }
 
     @Override
-    public List<Message> getMessagesFromChat(int chatId) {
-        return jdbcTemplate.query(messageQueries.get("getMessagesFromChat"), new Object[]{chatId}, new MessageMapper());
-    }
-
-    @Override
     public Page<Message> getMessagesFromChat(int chatId, Pageable pageable) {
         Number total = jdbcTemplate.queryForObject(messageQueries.get("rowCount"),
                 new Object[]{chatId},
