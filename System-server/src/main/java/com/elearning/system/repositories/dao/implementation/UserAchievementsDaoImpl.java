@@ -19,7 +19,7 @@ import java.util.Map;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:achievement.properties")
 public class UserAchievementsDaoImpl extends GenericDaoImpl<UserAchievement> implements UserAchievementsDao {
 
     private final String insertQuery = "(?, ?, NOW())";

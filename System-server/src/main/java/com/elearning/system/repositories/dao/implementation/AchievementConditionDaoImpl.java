@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:achievement.properties")
 public class AchievementConditionDaoImpl extends GenericDaoImpl<AchievementCondition> implements AchievementConditionDao {
 
     private final String insertQuery = "(cast(? AS condition_operator), ?, ?, ?)";

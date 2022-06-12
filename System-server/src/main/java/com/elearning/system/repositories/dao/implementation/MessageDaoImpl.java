@@ -19,7 +19,7 @@ import java.util.Map;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:chat.properties")
 public class MessageDaoImpl extends GenericDaoImpl<Message> implements MessageDao {
 
     @Value("#{${sql.message}}")

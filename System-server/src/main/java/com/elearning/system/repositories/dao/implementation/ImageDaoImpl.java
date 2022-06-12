@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:database.properties")
 public class ImageDaoImpl extends GenericDaoImpl<Image> implements ImageDao {
     @Value("#{${sql.image}}")
     private Map<String, String> imageQueries;

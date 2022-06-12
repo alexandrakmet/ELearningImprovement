@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:database.properties")
 public class TagDaoImpl extends GenericDaoImpl<Tag> implements TagDao {
     @Value("#{${sql.tag}}")
     private Map<String, String> tagQueries;

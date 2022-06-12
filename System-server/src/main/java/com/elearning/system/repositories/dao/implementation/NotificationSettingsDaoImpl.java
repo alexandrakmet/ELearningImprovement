@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:notifications.properties")
 public class NotificationSettingsDaoImpl extends GenericDaoImpl<NotificationSettings> implements NotificationSettingsDao {
 
     @Value("#{${sql.notificationSettings}}")

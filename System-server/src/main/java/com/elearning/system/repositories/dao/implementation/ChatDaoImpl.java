@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:chat.properties")
 public class ChatDaoImpl extends GenericDaoImpl<Chat> implements ChatDao {
     @Value("#{${sql.chat}}")
     private Map<String, String> chatQueries;

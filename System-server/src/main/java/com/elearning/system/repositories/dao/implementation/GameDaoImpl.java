@@ -30,7 +30,7 @@ import java.util.*;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:game.properties")
 public class GameDaoImpl implements GameDao {
 
     @Value("#{${sql.game}}")

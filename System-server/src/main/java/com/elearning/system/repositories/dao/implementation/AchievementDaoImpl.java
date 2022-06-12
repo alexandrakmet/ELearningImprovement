@@ -21,7 +21,7 @@ import java.util.Map;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:achievement.properties")
 public class AchievementDaoImpl extends GenericDaoImpl<Achievement> implements AchievementDao {
 
     @Value("#{${sql.achievement}}")

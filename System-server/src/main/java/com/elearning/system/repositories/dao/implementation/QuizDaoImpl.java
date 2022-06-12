@@ -25,7 +25,7 @@ import static org.springframework.data.domain.Page.empty;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:quiz.properties")
 public class QuizDaoImpl extends GenericDaoImpl<Quiz> implements QuizDao {
 
     @Value("#{${sql.quiz}}")

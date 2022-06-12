@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:database.properties")
 public class CategoryDaoImpl extends GenericDaoImpl<Category> implements CategoryDao {
     @Value("#{${sql.category}}")
     private Map<String, String> categoryQueries;

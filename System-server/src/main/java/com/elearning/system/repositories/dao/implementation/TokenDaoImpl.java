@@ -20,7 +20,7 @@ import java.util.Map;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:database.properties")
 public class TokenDaoImpl implements TokenDao {
 
     @Value("#{${sql.tokens}}")

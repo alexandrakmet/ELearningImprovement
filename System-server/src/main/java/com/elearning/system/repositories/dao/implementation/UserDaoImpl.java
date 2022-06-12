@@ -26,7 +26,7 @@ import java.util.Map;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:user.properties")
 public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 
     @Value("#{${sql.users}}")

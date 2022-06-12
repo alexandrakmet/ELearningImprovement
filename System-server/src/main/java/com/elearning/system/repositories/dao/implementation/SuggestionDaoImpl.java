@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:suggestions.properties")
 public class SuggestionDaoImpl implements SuggestionDao {
     @Value("#{${sql.suggestions}}")
     private Map<String, String> suggestionsQueries;

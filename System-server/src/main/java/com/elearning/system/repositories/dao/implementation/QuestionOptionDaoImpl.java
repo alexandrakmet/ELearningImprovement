@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:database.properties")
 public class QuestionOptionDaoImpl extends GenericDaoImpl<QuestionOption> implements QuestionOptionDao {
     @Value("#{${sql.questionOption}}")
     private Map<String, String> questionOptionQueries;

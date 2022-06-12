@@ -19,7 +19,7 @@ import java.util.Map;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:dashboard.properties")
 public class DashboardDaoImpl implements DashboardDao {
     @Value("#{${sql.dashboard}}")
     private Map<String, String> dashboardQueries;

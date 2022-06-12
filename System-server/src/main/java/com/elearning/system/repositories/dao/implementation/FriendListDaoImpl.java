@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:friendlist.properties")
 public class FriendListDaoImpl implements FriendListDao {
     @Autowired
     @Qualifier("postgresJdbcTemplate")

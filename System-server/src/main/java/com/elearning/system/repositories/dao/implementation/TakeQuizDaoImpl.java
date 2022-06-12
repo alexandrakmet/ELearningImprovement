@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:takeQuiz.properties")
 public class TakeQuizDaoImpl extends GenericDaoImpl<TakeQuiz> implements TakeQuizDao {
 
 

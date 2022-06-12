@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:group.properties")
 public class GroupDaoImpl extends GenericDaoImpl<Group> implements GroupDao {
 
     @Value("#{${sql.group}}")

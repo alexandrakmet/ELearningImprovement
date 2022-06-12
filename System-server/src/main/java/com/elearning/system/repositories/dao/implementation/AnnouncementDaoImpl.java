@@ -20,7 +20,7 @@ import java.util.Map;
 
 @Slf4j
 @Repository
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:announcement.properties")
 public class AnnouncementDaoImpl extends GenericDaoImpl<Announcement> implements AnnouncementDao {
     @Value("#{${sql.announcement}}")
     private Map<String, String> announcementQueries;
