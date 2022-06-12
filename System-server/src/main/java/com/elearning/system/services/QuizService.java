@@ -43,10 +43,6 @@ public class QuizService {
     @Transactional
     public int createQuiz(Quiz quiz) {
         quiz.setStatus(QuizStatus.ACTIVATED);
-        if (quiz == null) {
-            log.info("createQuiz: Quiz is null");
-            return -1;
-        }
 
         if (quiz.getImageId() == -1) {
             quiz.setImageId(imageService.addLogoImage());
@@ -104,7 +100,7 @@ public class QuizService {
         return true;
     }
 
-    public void addQuizTags(Quiz quiz) {
+    void addQuizTags(Quiz quiz) {
         for (Tag tag : quiz.getTags()) {
             int tagId = tagService.addTag(tag);
             if (tagId != -1) {
@@ -113,7 +109,7 @@ public class QuizService {
         }
     }
 
-    public void deleteQuizTags(Quiz quiz) {
+    void deleteQuizTags(Quiz quiz) {
         int quizId = quiz.getId();
         for (Tag tag : quiz.getTags()) {
             quizDao.removeTag(quizId, tag.getId());
@@ -126,7 +122,7 @@ public class QuizService {
         return quiz;
     }
 
-    public Quiz getQuizById(int id) {
+    Quiz getQuizById(int id) {
         return quizDao.getFullInfo(id);
     }
 
@@ -178,7 +174,7 @@ public class QuizService {
         }
     }
 
-    public boolean getFavouriteMarkByUserIdAndQuizId(int userId, int quizId) {
+    boolean getFavouriteMarkByUserIdAndQuizId(int userId, int quizId) {
         return quizDao.getFavouriteMarkByUserIdAndQuizId(userId, quizId);
     }
 

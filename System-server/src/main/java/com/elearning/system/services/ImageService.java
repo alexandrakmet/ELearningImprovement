@@ -58,15 +58,15 @@ public class ImageService {
         return saveImage(encodedFile);
     }
 
-    public int addLogoImage() {
+    int addLogoImage() {
         return saveImage(logo);
     }
 
-    public int addUserProfileImage() {
+    int addUserProfileImage() {
         return saveImage(userProfileImage);
     }
 
-    public int saveImage(String encodedFile) {
+    private int saveImage(String encodedFile) {
         int imageId = imageDao.getIdBySrc(encodedFile);
         if (imageId != -1) {
             return imageId;

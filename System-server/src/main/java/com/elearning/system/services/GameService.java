@@ -40,6 +40,10 @@ public class GameService {
     @Autowired
     private WebSocketSenderService socketSenderService;
 
+    private final static int QR_WIDTH = 200;
+
+    private final static int QR_HEIGHT = 200;
+
     @Value("${url}")
     private String URL;
 
@@ -237,7 +241,7 @@ public class GameService {
     private String getQRCode(String accessCode) {
         return Base64.getEncoder().encodeToString(qrCodeGenerator.getQRCodeImage(
                 URL + "game/" + accessCode + "/play",
-                200, 200));
+                QR_WIDTH, QR_HEIGHT));
     }
 
 }

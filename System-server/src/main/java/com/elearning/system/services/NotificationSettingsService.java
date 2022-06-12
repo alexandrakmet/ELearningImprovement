@@ -13,7 +13,7 @@ public class NotificationSettingsService {
     @Autowired
     private NotificationSettingsDao notificationSettingsDao;
 
-    public boolean createNotificationSettings(NotificationSettings notificationSettings) {
+    boolean createNotificationSettings(NotificationSettings notificationSettings) {
         int notificationId = notificationSettingsDao.save(notificationSettings);
         if (notificationId == -1) {
             log.info("createNotificationSettings: Notification Settings wasn't saved");

@@ -18,7 +18,7 @@ public class TagService {
         return tagDao.getByQuizId(quizId);
     }
 
-    public int addTag(Tag tag) {
+    int addTag(Tag tag) {
         int tagId = -1;
         String tagName = tag.getName();
         if (tagName != null && !tagName.isEmpty()) {

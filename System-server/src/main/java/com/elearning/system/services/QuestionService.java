@@ -19,7 +19,7 @@ public class QuestionService {
     @Autowired
     private QuestionOptionService questionOptionService;
 
-    public int addQuestion(Question question) {
+    int addQuestion(Question question) {
         int questionId = questionDao.save(question);
         if (questionId != -1) {
             for (QuestionOption option : question.getOptions()) {
@@ -45,13 +45,13 @@ public class QuestionService {
         questionDao.deleteQuestions(questionsId);
     }
 
-    public void deleteQuestions(List<Question> questions) {
+    void deleteQuestions(List<Question> questions) {
         questionDao.deleteQuestions(
                 questions.stream().map(Question::getId).collect(Collectors.toList())
         );
     }
 
-    public void addQuestions(List<Question> questions) {
+    void addQuestions(List<Question> questions) {
         questions.stream().map(this::addQuestion).close();
     }
 }

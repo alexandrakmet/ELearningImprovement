@@ -59,31 +59,27 @@ public class AnnouncementService {
     }
 
     public Page<Announcement> getPageForAllAnnouncements(Optional<Integer> page, Optional<Integer> size) {
-        Page<Announcement> announcementPage = announcementDao.getAllInfoForPage(
+        return announcementDao.getAllInfoForPage(
                 PageRequest.of(page.orElse(0), size.orElse(10),
                         Sort.Direction.DESC, "createdDate"));
-        return announcementPage;
     }
 
     public Page<Announcement> getPageForAllAnnouncements(boolean isPublished, Optional<Integer> page, Optional<Integer> size) {
-        Page<Announcement> announcementPage = announcementDao.getAllInfoForPage(isPublished,
+        return announcementDao.getAllInfoForPage(isPublished,
                 PageRequest.of(page.orElse(0), size.orElse(10),
                         Sort.Direction.DESC, "createdDate"));
-        return announcementPage;
     }
 
     public Page<Announcement> getPageByAuthorLogin(String login, Optional<Integer> page, Optional<Integer> size) {
-        Page<Announcement> announcementPage = announcementDao.getPageByAuthorLogin(login,
+        return announcementDao.getPageByAuthorLogin(login,
                 PageRequest.of(page.orElse(0), size.orElse(10),
                         Sort.Direction.DESC, "createdDate"));
-        return announcementPage;
     }
 
     public Page<Announcement> getPageByAuthorId(int authorId, Optional<Integer> page, Optional<Integer> size) {
-        Page<Announcement> announcementPage = announcementDao.getPageByAuthorId(authorId,
+        return announcementDao.getPageByAuthorId(authorId,
                 PageRequest.of(page.orElse(0), size.orElse(10),
                         Sort.Direction.DESC, "createdDate"));
-        return announcementPage;
     }
 
 

@@ -24,7 +24,7 @@ public class TakeQuizService {
     @Autowired
     private QuizService quizService;
 
-    public void saveUsersResults(List<UserDto> users) {
+    void saveUsersResults(List<UserDto> users) {
 
         users.stream()
                 .filter(user -> user.getRegisterId() != 0)

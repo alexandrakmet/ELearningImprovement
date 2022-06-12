@@ -20,7 +20,7 @@ public class TokenService {
         tokenDao.deleteOldTokens();
     }
 
-    public void saveToken(Token tokenForNewUser) {
+    void saveToken(Token tokenForNewUser) {
         tokenDao.save(tokenForNewUser);
     }
 
@@ -28,7 +28,7 @@ public class TokenService {
         return tokenDao.getUserId(token);
     }
 
-    public Token getTokenByUserId(int id) {
+    Token getTokenByUserId(int id) {
         return tokenDao.get(id);
     }
 

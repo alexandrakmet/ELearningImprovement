@@ -14,11 +14,11 @@ public class QuestionOptionService {
     @Autowired
     private QuestionOptionDao questionOptionDao;
 
-    public int addQuestionOption(QuestionOption questionOption) {
+    int addQuestionOption(QuestionOption questionOption) {
         return questionOptionDao.save(questionOption);
     }
 
-    public void updateQuestionOption(QuestionOption questionOption) {
+    void updateQuestionOption(QuestionOption questionOption) {
         questionOptionDao.update(questionOption);
     }
 

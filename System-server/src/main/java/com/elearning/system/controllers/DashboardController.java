@@ -22,10 +22,12 @@ public class DashboardController {
     @Autowired
     private DashboardService dashboardService;
 
+    private static final int TOP_USERS_LIMIT = 7;
+
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/top")
     public List<User> getTopPlayers() {
-        return dashboardService.getTopUsers(7);
+        return dashboardService.getTopUsers(TOP_USERS_LIMIT);
     }
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN') or hasRole('MODERATOR')")

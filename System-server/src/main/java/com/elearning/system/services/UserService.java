@@ -59,7 +59,6 @@ public class UserService {
     @Autowired
     private NotificationSettingsService notificationSettingsService;
 
-    //@Value("${url}")
     private String URL = "http://localhost:4200/#/";
 
     @Transactional
@@ -195,16 +194,13 @@ public class UserService {
     }
 
     public Page<User> getAllUsersPage(Optional<Integer> page, Optional<Integer> size) {
-        Page<User> allUsersPage = userDao.getAllUsersPage(
+        return userDao.getAllUsersPage(
                 PageRequest.of(page.orElse(0), size.orElse(10),
                         Sort.Direction.DESC, "id"));
-        return allUsersPage;
     }
 
     public User getUserDataById(int id) {
-        User user = userDao.get(id);
-
-        return user;
+        return userDao.get(id);
     }
 
     public void updateUserProfile(User user) {
@@ -212,7 +208,6 @@ public class UserService {
 
         currentUser.setFirstName(user.getFirstName());
         currentUser.setSecondName(user.getSecondName());
-        //currentUser.setPassword(passwordEncoder.encode(user.getPassword()));
         currentUser.setProfile(user.getProfile());
         currentUser.setMail(user.getMail());
 
@@ -270,10 +265,9 @@ public class UserService {
     }
 
     public Page<User> getUserFriendsPage(int userId, Optional<Integer> page, Optional<Integer> size) {
-        Page<User> friendsPage = userDao.getUserFriendsPage(userId,
+        return userDao.getUserFriendsPage(userId,
                 PageRequest.of(page.orElse(0), size.orElse(10),
                         Sort.Direction.DESC, "id"));
-        return friendsPage;
     }
 
     public List<FriendActivity> getAllFriendsActivity(int userId) {
@@ -281,10 +275,9 @@ public class UserService {
     }
 
     public Page<FriendActivity> getAllFriendsActivityPage(int userId, Optional<Integer> page, Optional<Integer> size) {
-        Page<FriendActivity> friendsActivityPage = userDao.getAllFriendsActivityPage(userId,
+        return userDao.getAllFriendsActivityPage(userId,
                 PageRequest.of(page.orElse(0), size.orElse(10),
                         Sort.Direction.DESC, "id"));
-        return friendsActivityPage;
     }
 
     public List<FriendActivity> getFilteredFriendsActivity(int userId, boolean addFriend,
@@ -305,11 +298,10 @@ public class UserService {
             log.info("getFilteredFriendsActivityPage: Nothing to get");
             return null;
         }
-        Page<FriendActivity> friendsActivityPage = userDao.getFilteredFriendsActivityPage(
+        return userDao.getFilteredFriendsActivityPage(
                 userId, addFriend, markQuizAsFavorite, publishQuiz, achievement,
                 PageRequest.of(page.orElse(0), size.orElse(10),
                         Sort.Direction.DESC, "id"));
-        return friendsActivityPage;
     }
 
     public List<User> searchUsersByLogin(String login) {
@@ -317,10 +309,9 @@ public class UserService {
     }
 
     public Page<User> searchUsersByLogin(String login, Optional<Integer> page, Optional<Integer> size) {
-        Page<User> users = userDao.searchUsersByLogin(login,
+        return userDao.searchUsersByLogin(login,
                 PageRequest.of(page.orElse(0), size.orElse(10),
                         Sort.Direction.DESC, "id"));
-        return users;
     }
 
     public List<User> searchUsersByLogin(String login, Role role) {
@@ -328,10 +319,9 @@ public class UserService {
     }
 
     public Page<User> searchUsersByLogin(String login, Role role, Optional<Integer> page, Optional<Integer> size) {
-        Page<User> users = userDao.searchUsersByLogin(login, role,
+        return userDao.searchUsersByLogin(login, role,
                 PageRequest.of(page.orElse(0), size.orElse(10),
                         Sort.Direction.DESC, "id"));
-        return users;
     }
 
 
@@ -357,7 +347,7 @@ public class UserService {
         return true;
     }
 
-    public void updateUsersScore(UserDto user) {
+    void updateUsersScore(UserDto user) {
         User userFromDb = userDao.get(user.getRegisterId());
         userDao.updateUserScore(user.getRegisterId(),
                 userFromDb.getScore() + user.getScore());

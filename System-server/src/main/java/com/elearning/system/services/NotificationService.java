@@ -20,8 +20,8 @@ public class NotificationService {
     @Autowired
     private UserService userService;
 
-    public Notification generateNotification(int authorId, int objectId, int userId, String gameId,
-                                             NotificationType notificationType) {
+    Notification generateNotification(int authorId, int objectId, int userId, String gameId,
+                                      NotificationType notificationType) {
         User notificationAuthor = userService.getUserDataById(authorId);
 
         Notification notification = Notification.builder()
@@ -32,37 +32,36 @@ public class NotificationService {
                 .isMessage(false)
                 .build();
 
-        switch (notificationType) {
-            case CREATED_NEWS:
-                notification.setAction("CREATED_NEWS");
-                notification.setActionLink("announcement/" + objectId);
-                break;
-            case CREATED_QUIZ:
-                notification.setAction("CREATED_QUIZ");
-                notification.setActionLink("quiz/" + objectId);
-                break;
-            case GAME_INVITATION:
-                notification.setAction("GAME_INVITATION");
-                notification.setActionLink("game/" + gameId + "/play");
-                break;
-            case FRIEND_INVITATION:
-                notification.setAction("FRIEND_INVITATION");
-                notification.setActionLink("users/" + authorId);
-                notification.setUserId(objectId);
-                break;
-            case MESSAGE:
-                notification.setAction("MESSAGE");
-                notification.setActionLink("chat/" + objectId);
-                notification.setMessage(true);
-                break;
-            default:
-                return null;
+        if (notificationType == NotificationType.CREATED_NEWS) {
+            notification.setAction("CREATED_NEWS");
+            notification.setActionLink("announcement/" + objectId);
+
+        } else if (notificationType == NotificationType.CREATED_QUIZ) {
+            notification.setAction("CREATED_QUIZ");
+            notification.setActionLink("quiz/" + objectId);
+
+        } else if (notificationType == NotificationType.GAME_INVITATION) {
+            notification.setAction("GAME_INVITATION");
+            notification.setActionLink("game/" + gameId + "/play");
+
+        } else if (notificationType == NotificationType.FRIEND_INVITATION) {
+            notification.setAction("FRIEND_INVITATION");
+            notification.setActionLink("users/" + authorId);
+            notification.setUserId(objectId);
+
+        } else if (notificationType == NotificationType.MESSAGE) {
+            notification.setAction("MESSAGE");
+            notification.setActionLink("chat/" + objectId);
+            notification.setMessage(true);
+
+        } else {
+            return null;
         }
         notification.setId(createNotification(notification));
         return notification;
     }
 
-    public int createNotification(Notification notification) {
+    private int createNotification(Notification notification) {
         int notificationId = notificationDao.save(notification);
         if (notificationId == -1) {
             log.info("createNotification: Notification wasn't saved");
@@ -93,13 +92,11 @@ public class NotificationService {
     }
 
     public List<Notification> getNotificationsByUserId(int userId) {
-        List<Notification> list = notificationDao.getByUserId(userId);
-        return list;
+        return notificationDao.getByUserId(userId);
     }
 
     public List<Notification> getMessagesByUserId(int userId) {
-        List<Notification> list = notificationDao.getMessagesByUserId(userId);
-        return list;
+        return notificationDao.getMessagesByUserId(userId);
     }
 
     public void deleteAllUserNotifications(int userId) {

@@ -29,7 +29,7 @@ public class ChatService {
         return chatDao.getFullInfo(chatId);
     }
 
-    public Chat getGroupChat(String groupName) {
+    Chat getGroupChat(String groupName) {
         return chatDao.getGroupChat(groupName);
     }
 
