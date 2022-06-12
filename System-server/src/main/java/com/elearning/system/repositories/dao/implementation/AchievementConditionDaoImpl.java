@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +18,6 @@ import java.util.Map;
 @PropertySource("classpath:achievement.properties")
 public class AchievementConditionDaoImpl extends GenericDaoImpl<AchievementCondition> implements AchievementConditionDao {
 
-    private final String insertQuery = "(cast(? AS condition_operator), ?, ?, ?)";
     @Value("#{${sql.achievementCondition}}")
     private Map<String, String> achievementConditionQueries;
 
@@ -70,6 +68,7 @@ public class AchievementConditionDaoImpl extends GenericDaoImpl<AchievementCondi
 
     private String getQueryForInsert(List<AchievementCondition> userAchievements) {
         String query = achievementConditionQueries.get("insertAchievementConditions");
+        String insertQuery = "(cast(? AS condition_operator), ?, ?, ?)";
         for (int i = 0; i < userAchievements.size() - 1; i++) {
             query = query.concat(insertQuery + ", ");
         }

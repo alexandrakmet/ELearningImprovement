@@ -70,8 +70,9 @@ public class GameDaoImpl implements GameDao {
     @Override
     public Question getQuestionById(int id) {
         String selectQuery = queries.get("getQuestionById");
-        return jdbcTemplate.query(selectQuery,
-                new Object[]{id}, new QuestionExtractor()).get(0);
+        List<Question> result = jdbcTemplate.query(selectQuery,
+                new Object[]{id}, new QuestionExtractor());
+        return result != null? result.get(0): null;
     }
 
     @Override

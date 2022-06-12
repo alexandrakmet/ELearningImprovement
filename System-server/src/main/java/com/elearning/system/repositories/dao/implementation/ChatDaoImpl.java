@@ -67,7 +67,10 @@ public class ChatDaoImpl extends GenericDaoImpl<Chat> implements ChatDao {
         List<Chat> result = jdbcTemplate.query(getQuery,
                 new Object[]{id},
                 new ChatExtractor());
-        return result.size() == 0 ? null : result.get(0);
+        if (result != null) {
+            return result.size() == 0 ? null : result.get(0);
+        } else
+            return null;
     }
 
     @Override
@@ -105,10 +108,6 @@ public class ChatDaoImpl extends GenericDaoImpl<Chat> implements ChatDao {
                 new Object[]{chatId, userId},
                 (resultSet, number) -> resultSet.getInt("row_count"));
 
-        if (total == null) {
-            return false;
-        }
-
-        return total.intValue() > 0;
+        return total != null && total.intValue() > 0;
     }
 }

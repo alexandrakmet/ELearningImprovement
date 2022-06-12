@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +21,6 @@ import java.util.Map;
 @PropertySource("classpath:achievement.properties")
 public class UserAchievementsDaoImpl extends GenericDaoImpl<UserAchievement> implements UserAchievementsDao {
 
-    private final String insertQuery = "(?, ?, NOW())";
     @Value("#{${sql.userAchievements}}")
     private Map<String, String> userAchievementsQueries;
 
@@ -75,6 +73,7 @@ public class UserAchievementsDaoImpl extends GenericDaoImpl<UserAchievement> imp
 
     private String getQueryForInsert(List<UserAchievement> userAchievements) {
         String query = userAchievementsQueries.get("insertUserAchievements");
+        String insertQuery = "(?, ?, NOW())";
         for (int i = 0; i < userAchievements.size() - 1; i++) {
             query = query.concat(insertQuery + ", ");
         }
