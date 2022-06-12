@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class ErrorHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Object> handleNodataFoundException(
+    public ResponseEntity<Map<String, Object>> handleNodataFoundException(
             IllegalArgumentException ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
@@ -34,7 +34,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<Object> handleBadCredentialsException(
+    public ResponseEntity<Map<String, Object>> handleBadCredentialsException(
             BadCredentialsException ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
@@ -45,7 +45,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(DisabledException.class)
-    public ResponseEntity<Object> handleDisabledException(
+    public ResponseEntity<Map<String, Object>> handleDisabledException(
             DisabledException ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
@@ -56,7 +56,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(LoginAlreadyExistsException.class)
-    public ResponseEntity<Object> handleUserLoginException(
+    public ResponseEntity<Map<String, Object>> handleUserLoginException(
             LoginAlreadyExistsException ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
@@ -67,7 +67,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(MailAlreadyExistsException.class)
-    public ResponseEntity<Object> handleUserMailException(
+    public ResponseEntity<Map<String, Object>> handleUserMailException(
             MailAlreadyExistsException ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
@@ -78,7 +78,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<Object> handleUserDuplicateException(
+    public ResponseEntity<Map<String, Object>> handleUserDuplicateException(
             UserAlreadyExistsException ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
@@ -89,7 +89,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(TokenNotExpiredException.class)
-    public ResponseEntity<Object> handleUserTokenException(
+    public ResponseEntity<Map<String, Object>> handleUserTokenException(
             TokenNotExpiredException ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
